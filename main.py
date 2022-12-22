@@ -93,7 +93,7 @@ def hello():
     Параметры
     ---------
     :param:
-    :return: How can I help you?
+    :return:
     """
 
 
@@ -112,7 +112,7 @@ def show_phone():
     Параметры
     ---------
     :param:
-    :return str: Возвращает сообщение о результате функции.
+    :return:
     """
 
 
