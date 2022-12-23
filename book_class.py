@@ -54,8 +54,12 @@ class Birthday(Field):
     """
     `Birthday` class, an optional field with a contact birthday info.
     """
-    pass
-
+    @Field.value.setter
+    def value(self, new_value):
+        if bool(re.match('\d{4}[.]\d{2}[.]\d{2}', new_value)):
+            self._value = datetime.strptime(new_value, "%Y.%m.%d").date()
+        else:
+            raise ValueError("Input date in format YYYY.MM.DD")
 
 class Record:
     """
