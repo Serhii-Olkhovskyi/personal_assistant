@@ -1,120 +1,29 @@
-def add_birthday():
-    """
-    Функция добавляет день рождения контакта.
+from book_class import ContactBook
+from bot_commands import COMMANDS
+import book_commands
 
-    Параметры
-    ---------
-    :param:
-    :return:
-    """
-
-
-def add_contact():
-    """
-    Функция добавляет в адресную книгу введенное имя контакта с большой буквы и его номер телефона.
-
-    Параметры
-    ---------
-    :param:
-    :return:
-    """
-
-
-def add_phone():
-    """
-    Функция добавляет к существующему контакту еще один номер телефона.
-
-    Параметры
-    ---------
-    :param:
-    :return:
-    """
-
-
-def change_phone():
-    """
-    Функция замены номера телефона существующего контакта.
-
-    Параметры
-    ---------
-    :param:
-    :return:
-    """
-
-
-def dell_phone():
-    """
-    Функция удаляет номер телефона у контакта.
-
-    Параметры
-    ---------
-    :param:
-    :return:
-    """
-
-
-def exit_program():
-    """
-    Функция завершает программу.
-
-    Параметры
-    ---------
-    :param:
-    :return:
-    """
-
-
-def func_show_all():
-    """
-    Функция выводит всю адресную книгу.
-
-    Параметры
-    ---------
-    :param:
-    :return:
-    """
-
-
-def func_show_birthday():
-    """
-    Функция выводит количество дней до следующего дня рождения контакта.
-
-    Параметры
-    ---------
-    :param:
-    :return:
-    """
-
-
-def hello():
-    """
-    Функция приветствия.
-
-    Параметры
-    ---------
-    :param:
-    :return:
-    """
+CONTACTS = ContactBook()
 
 
 def main():
-    """
-    Основная функция для запуска программы.
+    '''
+    A console bot assistant that recognizes commands entered from the keyboard and responds according to the entered
+    command.
+    :return: Answers according to commands
+    '''
 
-    :return:
-    """
+    # book_commands.hello_func()
+
+    # Bot execution
+    while True:
+        command = input("Please enter the command: ").lower().strip()
+        for key in COMMANDS:
+            if command.startswith(key):
+                command = key
+                break
+        result = COMMANDS[command](CONTACTS)
+
+        print(result)
 
 
-def show_phone():
-    """
-    Функция поиска номера по имени.
-
-    Параметры
-    ---------
-    :param:
-    :return:
-    """
-
-
-if __name__ == '__main__':
-    main()
+main()
