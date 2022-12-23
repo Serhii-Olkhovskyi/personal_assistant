@@ -73,6 +73,10 @@ class Record:
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
 
+    def get_phones(self):
+        all_phones = [phone.value for phone in self.phones]
+        return all_phones
+
 
 class ContactBook(UserDict):
     """
