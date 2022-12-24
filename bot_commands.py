@@ -1,6 +1,6 @@
 # Bot commands associated with ContactBook, Notes, Sort folders
-
 import book_commands
+from help import all_commands
 
 
 # Bot commands with associated functions
