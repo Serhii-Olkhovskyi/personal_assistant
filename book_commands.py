@@ -1,7 +1,7 @@
 # All ContactBook functions
 
 from book_class import Record, Address, Email, Birthday
-
+import pickle
 
 def name_input():
     name = input(f'Please enter contact name: ')
@@ -86,7 +86,9 @@ def save_contacts_to_file():
     Function saves contacts to file
     :return: string
     """
-    pass
+    with open(filename, "wb") as pack:
+        pickle.dump(self.data, pack)
+    return f'all data was recorded successfully'
 
 
 # @input_error
@@ -95,4 +97,5 @@ def load_contacts_from_file():
     Function loads contacts from the file
     :return: string
     """
-    pass
+    with open(filename, "rb") as unpack:
+        self.data = pickle.load(unpack)
