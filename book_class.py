@@ -1,4 +1,5 @@
 from collections import UserDict
+import re
 
 
 class Field:
@@ -39,7 +40,18 @@ class Phone(Field):
     `Phone` class, an optional field with a contact phone numbers.
     """
 
-    pass
+    def __init__(self, value):
+        super().__init__(value)
+
+    @property
+    def value(self):
+        return self.__value
+
+    @value.setter
+    def value(self, new_value):
+        if not re.fullmatch(r"\+\d{12}", new_value):
+            raise ValueError("Invalid phone number, enter the phone number in the format: (+380123456789)")
+        self.__value = new_value
 
 
 class Email(Field):
@@ -47,7 +59,18 @@ class Email(Field):
     `Email` class, an optional field with a contact email address.
     """
 
-    pass
+    def __init__(self, value):
+        super().__init__(value)
+
+    @property
+    def value(self):
+        return self.__value
+
+    @value.setter
+    def value(self, new_value):
+        if not re.findall(r"[a-zA-Z]{1,}[a-zA-Z0-9._]{1,}[@][a-zA-Z]{1,}[.][a-zA-Z]{2,}", new_value):
+            raise ValueError("Invalid email, enter in the correct format")
+        self.__value = new_value
 
 
 class Birthday(Field):
@@ -76,6 +99,9 @@ class Record:
     def get_phones(self):
         all_phones = [phone.value for phone in self.phones]
         return all_phones
+
+    def add_email(self, email):
+        self.email = email
 
 
 class ContactBook(UserDict):
