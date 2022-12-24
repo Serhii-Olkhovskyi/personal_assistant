@@ -18,3 +18,22 @@ def list_birthday(user_input):
         if nday <= end_day:
             lst += f'\n{name}: {CONTACTS[name].birthday.value}'
     return lst
+
+def save_contacts_to_file():
+    """
+    Function saves contacts to file
+    :return: string
+    """
+    with open(filename, "wb") as pack:
+        pickle.dump(self.data, pack)
+    return f'all data was recorded successfully'
+
+
+# @input_error
+def load_contacts_from_file():
+    """
+    Function loads contacts from the file
+    :return: string
+    """
+    with open(filename, "rb") as unpack:
+        self.data = pickle.load(unpack)
