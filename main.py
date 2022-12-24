@@ -3,7 +3,6 @@ from book_class import ContactBook
 from bot_commands import COMMANDS
 from book_commands import find_same_input
 
-
 CONTACTS = ContactBook()
 
 

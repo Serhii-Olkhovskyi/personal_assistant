@@ -21,6 +21,12 @@ def name_input():
 
 
 def address_input():
+    """
+    Input name
+
+    :return:
+    """
+
     address = input(f'Please enter contact address: ')
     return address
 

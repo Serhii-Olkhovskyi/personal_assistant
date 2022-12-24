@@ -74,6 +74,13 @@ class Record:
         self.birthday = birthday if birthday else None
 
     def add_phone(self, phone):
+        '''
+        Add phone
+
+        :param phone:
+        :return:
+        '''
+
         self.phones.append(Phone(phone))
 
     def get_phones(self):
