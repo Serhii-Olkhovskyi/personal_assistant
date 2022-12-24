@@ -1,5 +1,6 @@
 from book_class import Record, ContactBook
 
+
 def add_birthday():
     """
     Функция добавляет день рождения контакта.
@@ -33,12 +34,10 @@ def add_phone(name, new_phone):
     """
     if name not in contacts_dict:
         raise ValueError('This contact is not in the address book.')
-    
     record = Record(name)
     record.add_phone(new_phone)
     contacts_dict.add_record(record)
-    return f'You added new contact: {name} with this {phones}.'
-
+    return f'You added new contact: {name} with this {new_phone}.'
 
 def add_email(name, email):
     if name not in contacts_dict:
@@ -48,6 +47,7 @@ def add_email(name, email):
     record.add_email(email)
     contacts_dict.add_record(record)
     return f'You added new contact: {name} with this {email}.'
+
 
 def change_phone():
     """
