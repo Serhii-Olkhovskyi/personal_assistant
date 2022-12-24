@@ -213,3 +213,19 @@ def find_same_input(inp_user, command):
     for elem in same_input:
         print(elem)
     print()
+
+
+def show_all_info():
+    """
+    Функция выводит всю адресную книгу.
+
+    Параметры
+     ---------
+    :param:
+    :return:
+    """
+
+    for users in CONTACTS.values():
+        print(users.get_user_details(), )
+
+    return f'ok.'
