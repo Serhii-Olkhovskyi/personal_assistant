@@ -1,6 +1,9 @@
 # All ContactBook functions
 
-from book_class import Record, Address, Email, Birthday
+from book_class import ContactBook, Record, Address, Email, Birthday
+
+
+#CONTACTS = ContactBook()
 
 
 def name_input():
@@ -29,16 +32,7 @@ def birthday_input():
 
 
 # @input_error
-def hello_func():
-    """
-    Hello Bot message
-    :return: answer = string
-    """
-    pass
-
-
-# @input_error
-def add_contact_func(contacts):
+def add_contact_func():
     '''
     Command for adding records to the dictionary
     :param command: user input
@@ -51,27 +45,28 @@ def add_contact_func(contacts):
     email = email_input()
     birthday = birthday_input()
 
-    if name not in contacts.data.keys():
-        contacts.add_record(Record(name))
+    if name not in CONTACTS.data.keys():
+        CONTACTS.add_record(Record(name))
         if phones:
             for phone in phones:
-                if phone not in contacts[name].get_phones():
-                    contacts[name].add_phone(phone)
+                if phone not in CONTACTS[name].get_phones():
+                    CONTACTS[name].add_phone(phone)
 
         if address:
-            contacts[name].address = Address(address)
+            CONTACTS[name].address = Address(address)
 
         if email:
-            contacts[name].email = Email(email)
+            CONTACTS[name].email = Email(email)
 
         if birthday:
-            contacts[name].birthday = Birthday(birthday)
+            CONTACTS[name].birthday = Birthday(birthday)
 
-        return f"Contact {name} was added with: phones:[{', '.join(phones)}], address: {address}, email: {email}, birthday: [{birthday}]"
+        return f"Contact {name} was added with: phones:[{', '.join(phones)}], address: {address}, email: {email}, " \
+               f"birthday: [{birthday}] "
 
 
 # @input_error
-def add_phone_func(contacts):
+def add_phone_func():
     '''
     Command for adding phones to the contact
     :param command: contact book
@@ -81,17 +76,17 @@ def add_phone_func(contacts):
     name = name_input()
     phones = phones_input()
 
-    if name in contacts.data.keys():
+    if name in CONTACTS.data.keys():
         if phones:
             for phone in phones:
-                if phone not in contacts[name].get_phones():
-                    contacts[name].add_phone(phone)
+                if phone not in CONTACTS[name].get_phones():
+                    CONTACTS[name].add_phone(phone)
                 return f"Phones:[{', '.join(phones)}] were added to contact '{name}'."
     else:
         raise KeyError(f"No records with '{name}' contact found. Type another contact name to add phone.")
 
 
-def add_address_func(contacts):
+def add_address_func():
     '''
     Command for adding address to the contact
     :param command: contact book
@@ -101,10 +96,10 @@ def add_address_func(contacts):
     name = name_input()
     address = address_input()
 
-    if name in contacts.data.keys():
+    if name in CONTACTS.data.keys():
         if address:
-            if not contacts[name].address:
-                contacts[name].add_address(address)
+            if not CONTACTS[name].address:
+                CONTACTS[name].add_address(address)
                 return f"Address:{address}] was added to contact '{name}'."
             else:
                 raise ValueError(f"Contact '{name}' already has address record. Please enter another command to "
@@ -113,7 +108,7 @@ def add_address_func(contacts):
         raise KeyError(f"No records with '{name}' contact found. Type another contact name to add address.")
 
 
-def add_email_func(contacts):
+def add_email_func():
     '''
     Command for adding address to the contact
     :param command: contact book
@@ -123,10 +118,10 @@ def add_email_func(contacts):
     name = name_input()
     email = email_input()
 
-    if name in contacts.data.keys():
+    if name in CONTACTS.data.keys():
         if email:
-            if not contacts[name].email:
-                contacts[name].add_email(email)
+            if not CONTACTS[name].email:
+                CONTACTS[name].add_email(email)
                 return f"Email:{email} was added to contact '{name}'."
             else:
                 raise ValueError(f"Contact '{name}' already has email record. Please enter another command to "
@@ -135,7 +130,7 @@ def add_email_func(contacts):
         raise KeyError(f"No records with '{name}' contact found. Type another contact name to add email.")
 
 
-def add_birthday_func(contacts):
+def add_birthday_func():
     '''
     Command for adding address to the contact
     :param command: contact book
@@ -145,10 +140,10 @@ def add_birthday_func(contacts):
     name = name_input()
     birthday = birthday_input()
 
-    if name in contacts.data.keys():
+    if name in CONTACTS.data.keys():
         if birthday:
-            if not contacts[name].birthday:
-                contacts[name].add_birthday(birthday)
+            if not CONTACTS[name].birthday:
+                CONTACTS[name].add_birthday(birthday)
                 return f"Birthday:{birthday} was added to contact '{name}'."
             else:
                 raise ValueError(f"Contact '{name}' already has address record. Please enter another command to "
@@ -165,24 +160,4 @@ def exit_func():
     :return: string
     """
     return "Good bye!"
-
-
-# @input_error
-def save_contacts_to_file(contacts):
-    """
-    Function saves contacts to file
-    :return: string
-    """
-    contacts.save_to_file()
-    return "Contacts have been saved successfully."
-
-
-# @input_error
-def load_contacts_from_file(contacts):
-    """
-    Function loads contacts from the file
-    :return: string
-    """
-    contacts.read_from_file()
-    return "Contacts have been loaded successfully."
 
