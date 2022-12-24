@@ -1,3 +1,4 @@
+from pyfiglet import Figlet
 from book_class import ContactBook
 from bot_commands import COMMANDS
 from book_commands import find_same_input
@@ -13,6 +14,9 @@ def main():
     command.
     :return: Answers according to commands
     '''
+
+    preview_text = Figlet(font='slant')
+    print(preview_text.renderText('ProPy10'))
 
     while True:
         command = input("Please enter the command: ").lower().strip()
