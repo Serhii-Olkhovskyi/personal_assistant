@@ -8,6 +8,7 @@ def all_commands():
     :return: 'Enter new command.'
     """
 
+
     help_list = [
         ('DESCRIPTION', 'COMMAND', 'PARAMETER 1', 'PARAMETER 2', 'PARAMETER 3'),
         ('Add contact', 'add', 'name', 'phone_number', ''),

@@ -4,6 +4,7 @@ import time
 
 class Notes(UserDict):
     """Клас хранит notes
+
     реализует доступ к хранению изменению и поиску заметок
     Структура (словарь словарей):
     {id: {'title': 'title text',

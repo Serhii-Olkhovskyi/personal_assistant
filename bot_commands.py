@@ -3,7 +3,7 @@ import book_commands
 from help import all_commands
 
 
-# Bot commands with associated functions
+
 COMMANDS = {
     'hello': book_commands.hello_func,
     'exit': book_commands.exit_func,

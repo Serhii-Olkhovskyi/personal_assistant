@@ -10,6 +10,12 @@ else:
 
 
 def name_input():
+    """
+    input name
+
+    :return:
+    """
+
     name = input(f'Please enter contact name: ')
     return name
 

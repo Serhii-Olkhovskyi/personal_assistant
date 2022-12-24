@@ -136,6 +136,13 @@ def out_files(path_folders, folders):
 
 
 def list_of_files(way_consoles):
+    """
+    func
+
+    :param way_consoles:
+    :return:
+    """
+
     out_folders(list_name_folder[0])
     out_files(way_consoles, list_name_folder[0])
 

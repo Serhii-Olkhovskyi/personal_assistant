@@ -6,6 +6,7 @@ from collections import UserDict
 class Field:
     """
     `Field` class, which is the parent for all fields,
+
     and is responsible for the logic common to all fields.
     """
 
@@ -25,8 +26,9 @@ class Field:
 class Name(Field):
     """
     `Name` class, a mandatory field with a contact name.
+
     """
-    pass
+
 
 
 class Address(Field):
