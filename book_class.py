@@ -1,5 +1,5 @@
 from collections import UserDict
-
+import re
 
 class Field:
     """
@@ -39,7 +39,18 @@ class Phone(Field):
     `Phone` class, an optional field with a contact phone numbers.
     """
 
-    pass
+    def __init__(self, value):
+        super().__init__(value)
+
+    @property
+    def value(self):
+        return self.__value
+
+    @value.setter
+    def value(self, new_value):
+        if not re.fullmatch(r"\+\d{12}", new_value):
+            raise ValueError("Invalid phone number, enter the phone number in the format: (+380123456789)")
+        self.__value = new_value
 
 
 class Email(Field):
@@ -47,19 +58,32 @@ class Email(Field):
     `Email` class, an optional field with a contact email address.
     """
 
-    pass
+    def __init__(self, value):
+        super().__init__(value)
+
+    @property
+    def value(self):
+        return self.__value
+
+    @value.setter
+    def value(self, new_value):
+        if not re.findall(r"[a-zA-Z]{1,}[a-zA-Z0-9._]{1,}[@][a-zA-Z]{1,}[.][a-zA-Z]{2,}", new_value):
+            raise ValueError("Invalid email, enter in the correct format")
+        self.__value = new_value
 
 
 class Birthday(Field):
     """
     `Birthday` class, an optional field with a contact birthday info.
     """
+
     @Field.value.setter
     def value(self, new_value):
         if bool(re.match('\d{4}[.]\d{2}[.]\d{2}', new_value)):
             self._value = datetime.strptime(new_value, "%Y.%m.%d").date()
         else:
             raise ValueError("Input date in format YYYY.MM.DD")
+
 
 class Record:
     """
@@ -76,6 +100,9 @@ class Record:
 
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
+        
+    def add_email(self,email):
+        self.email = Email(email)
 
 
 class ContactBook(UserDict):
