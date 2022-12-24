@@ -1,3 +1,5 @@
+import pickle
+import sys
 from collections import UserDict
 
 
@@ -31,7 +33,6 @@ class Address(Field):
     """
     `Address` class, an optional field with a contact address info.
     """
-    pass
 
 
 class Phone(Field):
@@ -86,3 +87,35 @@ class ContactBook(UserDict):
 
     def add_record(self, record):
         self.data[record.name.value] = record
+
+    def address_book_load(self):
+        """
+        Функция загружает адресную книгу при старте.
+
+        Параметры
+        ---------
+        :param:
+        :return:
+        """
+
+        with open('dump.pickle', 'rb') as dump_file:
+            archive_book = pickle.load(dump_file)
+            return archive_book
+
+    def address_book_save(self, archive_book):
+        """
+        Функция сохраняет адресную книгу и завершает программу.
+
+        Параметры
+        ---------
+        :param:
+        :return:
+        """
+
+        with open('dump.pickle', 'wb') as dump_file:
+            pickle.dump(archive_book, dump_file)
+
+        sys.exit()
+
+
+CONTACTS = ContactBook()

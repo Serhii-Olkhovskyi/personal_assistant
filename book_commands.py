@@ -1,6 +1,12 @@
 # All ContactBook functions
+import os
 from difflib import get_close_matches
-from book_class import Record, Address, Email, Birthday
+from book_class import Record, Address, Email, Birthday, ContactBook, CONTACTS
+
+if os.path.exists('dump.pickle'):
+    CONTACTS = ContactBook().address_book_load()
+else:
+    CONTACTS = ContactBook()
 
 
 def name_input():
@@ -19,6 +25,10 @@ def phones_input():
 
 
 def email_input():
+    """
+    Create
+    :return:
+    """
     email = input(f'Please enter contact email: ')
     return email
 
@@ -40,7 +50,7 @@ def hello_func():
 
 
 # @input_error
-def add_contact_func(contacts):
+def add_contact_func():
     '''
     Command for adding records to the dictionary
     :param command: user input
@@ -53,21 +63,21 @@ def add_contact_func(contacts):
     email = email_input()
     birthday = birthday_input()
 
-    if name not in contacts.data.keys():
-        contacts.add_record(Record(name))
+    if name not in CONTACTS.data.keys():
+        CONTACTS.add_record(Record(name))
         if phones:
             for phone in phones:
-                if phone not in contacts[name].get_phones():
-                    contacts[name].add_phone(phone)
+                if phone not in CONTACTS[name].get_phones():
+                    CONTACTS[name].add_phone(phone)
 
         if address:
-            contacts[name].address = Address(address)
+            CONTACTS[name].address = Address(address)
 
         if email:
-            contacts[name].email = Email(email)
+            CONTACTS[name].email = Email(email)
 
         if birthday:
-            contacts[name].birthday = Birthday(birthday)
+            CONTACTS[name].birthday = Birthday(birthday)
 
         return f"Contact {name} was added with: phones:[{', '.join(phones)}], address: {address}, email: {email}, birthday: [{birthday}]"
 
@@ -79,7 +89,8 @@ def exit_func():
     the bot terminates its work after it displays "Good bye!" in the console.
     :return: string
     """
-    return "Good bye!"
+
+    ContactBook().address_book_save(CONTACTS)
 
 
 # @input_error
@@ -112,8 +123,10 @@ def find_same_input(inp_user, command):
     for elem in command.keys():
         list_commands.append(elem)
 
-    same_input = get_close_matches(inp_user, list_commands, n=3, cutoff=0.7)
+    same_input = get_close_matches(inp_user, list_commands, n=3, cutoff=0.4)
+    print()
     print('Such a command does not exist.')
     print('The following commands might work:')
     for elem in same_input:
         print(elem)
+    print()
