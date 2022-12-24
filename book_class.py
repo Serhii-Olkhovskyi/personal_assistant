@@ -1,4 +1,5 @@
 from collections import UserDict
+import pickle
 
 
 class Field:
@@ -95,3 +96,14 @@ class ContactBook(UserDict):
 
     def add_record(self, record):
         self.data[record.name.value] = record
+
+    def save_to_file(self):
+        with open('save.bin', "wb") as file:
+            pickle.dump(self.data, file)
+
+    def read_from_file(self):
+        try:
+            with open('save.bin', "rb") as file:
+                self.data = pickle.load(file)
+        except FileNotFoundError as error:
+            return error
