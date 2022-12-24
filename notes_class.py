@@ -4,6 +4,7 @@ import time
 
 class Notes(UserDict):
     """Клас хранит notes
+
     реализует доступ к хранению изменению и поиску заметок
     Структура (словарь словарей):
     {id: {'title': 'title text',
@@ -119,4 +120,3 @@ class Notes(UserDict):
                         if n_id not in list_id and item.lower() in notes['text'].lower():
                             list_id.append(n_id)
         return list_id
-

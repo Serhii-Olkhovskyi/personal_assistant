@@ -10,11 +10,23 @@ else:
 
 
 def name_input():
+    """
+    input name
+
+    :return:
+    """
+
     name = input(f'Please enter contact name: ')
     return name
 
 
 def address_input():
+    """
+    Input name
+
+    :return:
+    """
+
     address = input(f'Please enter contact address: ')
     return address
 
@@ -213,3 +225,19 @@ def find_same_input(inp_user, command):
     for elem in same_input:
         print(elem)
     print()
+
+
+def show_all_info():
+    """
+    Функция выводит всю адресную книгу.
+
+    Параметры
+     ---------
+    :param:
+    :return:
+    """
+
+    for users in CONTACTS.values():
+        print(users.get_user_details(), )
+
+    return f'ok.'

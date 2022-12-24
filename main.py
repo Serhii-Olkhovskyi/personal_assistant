@@ -3,13 +3,13 @@ from book_class import ContactBook
 from bot_commands import COMMANDS
 from book_commands import find_same_input
 
-
 CONTACTS = ContactBook()
 
 
 def main():
     '''
     A console bot assistant that recognizes commands entered from the
+
     keyboard and responds according to the entered
     command.
     :return: Answers according to commands
