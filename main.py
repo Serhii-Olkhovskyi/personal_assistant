@@ -1,8 +1,7 @@
 from book_class import ContactBook
 from bot_commands import COMMANDS
 from book_commands import find_same_input
-from input_error_handler import input_error
-import book_commands
+
 
 CONTACTS = ContactBook()
 
@@ -15,9 +14,6 @@ def main():
     :return: Answers according to commands
     '''
 
-    # book_commands.hello_func()
-
-    # Bot execution
     while True:
         command = input("Please enter the command: ").lower().strip()
         try:

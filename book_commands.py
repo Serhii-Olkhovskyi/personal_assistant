@@ -112,9 +112,8 @@ def find_same_input(inp_user, command):
     for elem in command.keys():
         list_commands.append(elem)
 
-    print(f'list_commands: {list_commands}')
     same_input = get_close_matches(inp_user, list_commands, n=3, cutoff=0.7)
     print('Such a command does not exist.')
     print('The following commands might work:')
-
-    print(same_input)
+    for elem in same_input:
+        print(elem)

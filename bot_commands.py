@@ -1,7 +1,7 @@
 # Bot commands associated with ContactBook, Notes, Sort folders
 
 import book_commands
-
+from help import all_commands
 
 # Bot commands with associated functions
 COMMANDS = {
@@ -10,6 +10,7 @@ COMMANDS = {
     'close': book_commands.exit_func,
     'good bye': book_commands.exit_func,
     'add contact': book_commands.add_contact_func,
+    'help': all_commands,
     # 'change contact': change,
     # 'delete contact': delete_phone,
     # 'show all contacts': show_all,
