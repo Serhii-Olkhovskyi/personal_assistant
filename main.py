@@ -1,9 +1,13 @@
+from difflib import get_close_matches
 from book_class import ContactBook
 from bot_commands import COMMANDS
 import book_commands
 
 CONTACTS = ContactBook()
 
+def find_same_input(inp_user):
+    same_input = get_close_matches(inp_user, COMMANDS.keys(), n=3, cutoff=0.7)
+    return same_input
 
 def main():
     '''
