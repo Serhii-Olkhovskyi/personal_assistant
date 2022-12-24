@@ -14,6 +14,7 @@ COMMANDS = {
     'add address': book_commands.add_address_func,
     'add email': book_commands.add_email_func,
     'add birthday': book_commands.add_birthday_func,
+    'help': all_commands,
     # 'change contact': change,
     # 'delete contact': delete_phone,
     # 'show all contacts': show_all,
