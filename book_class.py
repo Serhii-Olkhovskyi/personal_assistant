@@ -66,10 +66,10 @@ class Record:
 
     def __init__(self, name, address=None, phones=None, email=None, birthday=None):
         self.name = Name(name)
-        self.address = address
-        self.phones = []
-        self.email = email
-        self.birthday = birthday
+        self.address = address if address else None
+        self.phones = phones if phones else []
+        self.email = email if email else None
+        self.birthday = birthday if birthday else None
 
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
@@ -77,6 +77,15 @@ class Record:
     def get_phones(self):
         all_phones = [phone.value for phone in self.phones]
         return all_phones
+
+    def add_email(self, email):
+        self.email = Email(email)
+
+    def add_address(self, address):
+        self.address = Address(address)
+
+    def add_birthday(self, birthday):
+        self.birthday = Birthday(birthday)
 
 
 class ContactBook(UserDict):
