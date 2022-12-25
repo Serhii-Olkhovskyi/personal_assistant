@@ -16,13 +16,15 @@ def input_error(func):
     def wrapper(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        except KeyError:
-            return "This name doesn't exist"
+        except KeyError as key_error:
+            return key_error
         except TypeError:
             return "Wrong command type"
         except IndexError:
             return "Input name and phone number"
         except ValueError as exception:
             return exception.args[0]
+        except Exception as ex_error:
+            return ex_error
 
     return wrapper
