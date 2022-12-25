@@ -1,6 +1,6 @@
 # Bot commands associated with ContactBook, Notes, Sort folders
 import book_commands
-# from help import all_commands
+from help import all_commands
 
 COMMANDS = {
     'hello': book_commands.hello_func,
@@ -21,9 +21,9 @@ COMMANDS = {
     'delete email': book_commands.delete_email_func,
     'delete birthday': book_commands.delete_birthday_func,
     'delete contact': book_commands.delete_contact_func,
-    # 'help': all_commands,
+    'help': all_commands,
     'show all contacts': book_commands.show_all_info,
-    # 'phone': phone,
+    'phone': book_commands.phone,
     'birthday': book_commands.show_birthday,
     'list': book_commands.list_birthday,
     # 'search': find_contacts

@@ -428,3 +428,15 @@ def show_birthday():
             return f"Contact '{name}' hasn`t birthday record. Please enter another command to add birthday"
     else:
         return f"No records with '{name}' contact found. Type another contact name"
+
+
+@input_error
+def phone():
+    name =  name_input()
+    if name in CONTACTS.data.keys():
+        if CONTACTS[name].phones:
+            return f"{name}: {', '.join([phone.value for phone in CONTACTS[name].phones])}"
+        else:
+            return f"Contact '{name}' hasn`t any phone record. Please enter another command to add phone"
+    else:
+        return f"No records with '{name}' contact found. Type another contact name"
