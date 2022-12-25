@@ -4,6 +4,7 @@ from collections import UserDict
 from datetime import date
 import re
 
+
 class Field:
     """
     `Field` class, which is the parent for all fields,
@@ -27,7 +28,6 @@ class Field:
 class Name(Field):
     """
     `Name` class, a mandatory field with a contact name.
-
     """
 
 
@@ -35,6 +35,7 @@ class Address(Field):
     """
     `Address` class, an optional field with a contact address info.
     """
+    pass
 
 
 class Phone(Field):
@@ -84,54 +85,96 @@ class Record:
         self.birthday = birthday if birthday else None
 
     def add_phone(self, phone):
-        '''
-        Add phone
-
-        :param phone:
-        :return:
-        '''
-
+        """
+        Add phone to contact
+        :param: phone
+        """
         self.phones.append(Phone(phone))
 
     def get_phones(self):
+        """
+        Contact phones list
+        """
         all_phones = [phone.value for phone in self.phones]
         return all_phones
 
     def add_email(self, email):
+        """
+        Add email to contact
+        :param email: email address
+        """
         self.email = Email(email)
 
     def add_address(self, address):
+        """
+        Add address to contact
+        :param address: contact address
+        """
         self.address = Address(address)
 
     def add_birthday(self, birthday):
+        """
+        Add birthday to contact
+        :param birthday: date
+        """
         self.birthday = Birthday(birthday)
 
     def change_phone(self, phone, new_phone):
+        """
+        Change phone for contact
+        :param phone: old phone number
+        :param new_phone: new phone number
+        """
         for item in self.phones:
             if item.value == phone:
                 item.value = new_phone
 
     def change_email(self, new_email):
+        """
+        Change email for contact
+        :param new_email: new email address
+        """
         self.email = Email(new_email)
 
     def change_address(self, new_address):
+        """
+        Change address for contact
+        :param new_address: new address
+        """
         self.address = Address(new_address)
 
     def change_birthday(self, new_birthday):
+        """
+        Change birthday for contact
+        :param new_birthday: new date
+        """
         self.birthday = Birthday(new_birthday)
 
     def delete_phone(self, phone):
+        """
+        Delete phone for contact
+        :param phone: phone to delete
+        """
         for item in self.phones:
             if item.value == phone:
                 self.phones.remove(item)
 
     def delete_email(self):
+        """
+        Delete email for contact
+        """
         self.email = None
 
     def delete_address(self):
+        """
+        Delete address for contact
+        """
         self.address = None
 
     def delete_birthday(self):
+        """
+        Delete birthday for contact
+        """
         self.birthday = None
 
     def get_user_details(self):
@@ -177,9 +220,17 @@ class ContactBook(UserDict):
     """
 
     def add_record(self, record):
+        """
+        Add record to contact book
+        :param record: Record(name, phone, email, address, birthday)
+        """
         self.data[record.name.value] = record
 
     def delete_contact(self, name):
+        """
+        Delete contact from contact book
+        :param name: contact name
+        """
         del self.data[name]
 
     def address_book_load(self):
