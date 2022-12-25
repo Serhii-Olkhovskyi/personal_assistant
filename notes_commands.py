@@ -93,15 +93,18 @@ def show_notes_command():
     table = PrettyTable()
     table.field_names = ['id', 'Title', 'Text', 'tag', 'Date of change']
     if NOTES:
+        next_flag = False
         for notes in paginator([a for a in NOTES.keys()], n=10):
             for id_note, title, text, teg, date in notes:
                 table.add_row([id_note, title, text, ', '.join(teg), date])
             print(f'{col["yellow"]}{table.get_string()}')
             table.clear_rows()
-            if input(f'{col["blue"]}Type "next" to view the next page of notes, '
-                     f'or any character to stop browsing.\n').lower() == 'next':
+            if next_flag := input(f'{col["blue"]}Type "next" to view the next page of notes, '
+                                  f'or any character to stop browsing.\n').lower() == 'next':
                 continue
-        return f'{col["blue"]}this is the last page with notes'
+        if next_flag:
+            return f'{col["blue"]}this is the last page with notes'
+        return f'{col["blue"]} '
     return f'{col["red"]}Notes not yet created'
 
 
@@ -185,9 +188,27 @@ def edit_note_command():
                f'Use the "show notes" command to find out the note id'
 
 
+def del_note_command():
+    """Функция удаления заметок"""
+    id_note = input(f'{col["blue"]}Specify the note ID to delete, or type "show notes" to see all note IDs.\n')
+    if id_note.lower() in ['show notes', 'show note', 'show', 'shownote']:
+        return show_notes_command()
+    try:
+        id_note = int(id_note)
+        if NOTES.delete_by_id(notes_id=id_note):
+            return f'{col["yellow"]}Note removed'
+        else:
+            return f'{col["red"]}There are no notes with this ID\n' \
+                   f'Use the "show notes" command to find out the note id'
+    except ValueError:
+        return f'{col["red"]}There are no notes with this ID. ID must be only a number\n' \
+               f'Use the "show notes" command to find out the note id'
+
+
 COMMAND_NOTES = {
     'add note': add_note_commands,
     'search note': search_note_command,
     'show notes': show_notes_command,
-    'edit note': edit_note_command
+    'edit note': edit_note_command,
+    'delete note': del_note_command
 }
