@@ -1,17 +1,32 @@
 # All ContactBook functions
+import os
+from difflib import get_close_matches
+from book_class import ContactBook, Record, Address, Email, Birthday, CONTACTS
 
-from book_class import ContactBook, Record, Address, Email, Birthday
-
-
-#CONTACTS = ContactBook()
+if os.path.exists('dump.pickle'):
+    CONTACTS = ContactBook().address_book_load()
+else:
+    CONTACTS = ContactBook()
 
 
 def name_input():
+    """
+    input name
+
+    :return:
+    """
+
     name = input(f'Please enter contact name: ')
     return name
 
 
 def address_input():
+    """
+    Input name
+
+    :return:
+    """
+
     address = input(f'Please enter contact address: ')
     return address
 
@@ -29,6 +44,16 @@ def email_input():
 def birthday_input():
     birthday = input(f'Please enter contact birthday: ')
     return birthday
+
+
+def hello_func():
+    """
+    Hello Bot message
+
+    :return: answer = string
+    """
+
+    return "How can I help you?"
 
 
 # @input_error
@@ -159,5 +184,60 @@ def exit_func():
     the bot terminates its work after it displays "Good bye!" in the console.
     :return: string
     """
-    return "Good bye!"
 
+    ContactBook().address_book_save(CONTACTS)
+
+
+# @input_error
+def save_contacts_to_file():
+    """
+    Function saves contacts to file
+    :return: string
+    """
+    pass
+
+
+# @input_error
+def load_contacts_from_file():
+    """
+    Function loads contacts from the file
+    :return: string
+    """
+    pass
+
+
+def find_same_input(inp_user, command):
+    """
+    Analyzes the entered text and tries to guess what the user wants from it.
+
+    :param inp_user: str
+    :return:
+    """
+
+    list_commands = []
+    for elem in command.keys():
+        list_commands.append(elem)
+
+    same_input = get_close_matches(inp_user, list_commands, n=3, cutoff=0.4)
+    print()
+    print('Such a command does not exist.')
+    print('The following commands might work:')
+    for elem in same_input:
+        print(elem)
+    print()
+
+
+def show_all_info():
+    """
+    Функция выводит всю адресную книгу.
+
+    Параметры
+     ---------
+    :param:
+    :return:
+    """
+
+    for users in CONTACTS.values():
+        print(users.get_user_details(), )
+
+    return f'ok.'
