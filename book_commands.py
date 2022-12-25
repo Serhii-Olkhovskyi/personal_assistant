@@ -447,3 +447,31 @@ def phone():
             return f"Contact '{name}' hasn't any phone record. Please enter another command to add phone"
     else:
         return f"No records with '{name}' contact found. Type another contact name"
+
+def find_contacts(name):
+    data = name.strip().lower()
+    matches_list = []
+    for record in CONTACTS.values():
+
+        if data in record.name.value.lower():
+            matches_list.append(record.name.value)
+
+        elif data.isdigit():
+            for number in record.phones:
+                if data in number.value:
+                    matches_list.append(record.name.value)
+
+    return _show_contact(matches_list)
+
+def _show_contact(matches):
+
+    if len(matches) == 0 or matches is None:
+        return f"Збігів не знайдено."
+
+    elif len(matches) > 0:
+        return_text = ""
+
+        for match in matches:
+            return_text += f"Збіг в контакті - {match}\n"
+
+        return return_text

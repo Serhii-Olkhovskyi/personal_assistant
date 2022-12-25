@@ -26,5 +26,5 @@ COMMANDS = {
     'phone': book_commands.phone,
     'birthday': book_commands.show_birthday,
     'list': book_commands.list_birthday,
-    # 'search': find_contacts
+    'search': book_commands.find_contacts
 }
