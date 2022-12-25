@@ -137,7 +137,7 @@ def add_address_func():
         if address:
             if not CONTACTS[name].address:
                 CONTACTS[name].add_address(address)
-                return f"Address:{address}] was added to contact '{name}'."
+                return f"Address:{address} was added to contact '{name}'."
             else:
                 raise ValueError(f"Contact '{name}' already has address record. Please enter another command to "
                                  f"change address.")
@@ -439,11 +439,11 @@ def show_birthday():
 
 @input_error
 def phone():
-    name =  name_input()
+    name = name_input()
     if name in CONTACTS.data.keys():
         if CONTACTS[name].phones:
             return f"{name}: {', '.join([phone.value for phone in CONTACTS[name].phones])}"
         else:
-            return f"Contact '{name}' hasn`t any phone record. Please enter another command to add phone"
+            return f"Contact '{name}' hasn't any phone record. Please enter another command to add phone"
     else:
         return f"No records with '{name}' contact found. Type another contact name"
