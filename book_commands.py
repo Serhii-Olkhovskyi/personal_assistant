@@ -423,12 +423,19 @@ def show_birthday():
     name =  name_input()
     if name in CONTACTS.data.keys():
         if CONTACTS[name].birthday:
-            return f"{name} birthday: {CONTACTS[name].birthday.value}"
+            today = datetime.today()
+            bday = datetime.strptime(CONTACTS[name].birthday.value, "%d.%m.%Y").date()
+            if datetime(today.year, bday.month, bday.day) <= today:
+                nday = datetime(today.year + 1, bday.month, bday.day)
+            else:
+                nday = datetime(today.year, bday.month, bday.day)
+            timediff = (nday - today).days + 1
+            # timediff = (nday - today).days + 1 if (today - nday).days < 0 else (datetime(nday.year + 1, nday.month, nday.day) - today).days + 1
+            return f'{timediff} days till {name} birthday left!'
         else:
             return f"Contact '{name}' hasn`t birthday record. Please enter another command to add birthday"
     else:
         return f"No records with '{name}' contact found. Type another contact name"
-
 
 @input_error
 def phone():

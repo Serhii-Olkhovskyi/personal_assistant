@@ -2,7 +2,7 @@ import pickle
 import sys
 from collections import UserDict
 from datetime import date
-
+import re
 
 class Field:
     """
