@@ -5,6 +5,9 @@ from book_class import ContactBook, Record, Address, Email, Birthday, CONTACTS
 from datetime import datetime, timedelta
 from input_error_handler import input_error
 
+from book_class import Record, Address, Email, Birthday, ContactBook
+
+contacts_dict = ContactBook()
 if os.path.exists('dump.pickle'):
     CONTACTS = ContactBook().address_book_load()
 else:
@@ -61,11 +64,13 @@ def birthday_input():
     return birthday
 
 
+# @input_error
 def hello_func():
     """
     Hello Bot message
     :return: answer = string
     """
+    pass
 
     return "How can I help you?"
 
@@ -188,6 +193,26 @@ def add_birthday_func():
     else:
         raise KeyError(f"No records with '{name}' contact found. Type another contact name to add birthday.")
 
+def add_phone(name, new_phone):
+    if name not in contacts_dict:
+        raise ValueError('This contact is not in the address book.')
+    record = Record(name)
+    record.add_phone(new_phone)
+    contacts_dict.add_record(record)
+    return f'You added new contact: {name} with this {new_phone}.'
+
+
+def add_email(name, email):
+    if name not in contacts_dict:
+        raise ValueError('This contact is not in the address book.')
+
+    record = Record(name)
+    record.add_email(email)
+    contacts_dict.add_record(record)
+    return f'You added new contact: {name} with this {email}.'
+
+
+# @input_error
 
 @input_error
 def exit_func():

@@ -1,13 +1,11 @@
-import pickle
-import sys
 from collections import UserDict
+import re
 from datetime import date
 
 
 class Field:
     """
     `Field` class, which is the parent for all fields,
-
     and is responsible for the logic common to all fields.
     """
 
@@ -27,14 +25,15 @@ class Field:
 class Name(Field):
     """
     `Name` class, a mandatory field with a contact name.
-
     """
+    pass
 
 
 class Address(Field):
     """
     `Address` class, an optional field with a contact address info.
     """
+    pass
 
 
 class Phone(Field):
@@ -57,17 +56,7 @@ class Birthday(Field):
     """
     `Birthday` class, an optional field with a contact birthday info.
     """
-
-    @Field.value.setter
-    def value(self, value):
-        if re.search(r"\b\d{2}[.]\d{2}[.]\d{4}", value):
-            value_splited = value.split(".")
-            self.__value = date(year=int(value_splited[2]), month=int(value_splited[1]), day=int(value_splited[0]))
-        else:
-            raise Exception("Birthday must be in DD.MM.YYYY format")
-
-    def __str__(self) -> str:
-        return self.__value.strftime("%d.%m.%Y")
+    pass
 
 
 class Record:
@@ -78,19 +67,12 @@ class Record:
 
     def __init__(self, name, address=None, phones=None, email=None, birthday=None):
         self.name = Name(name)
-        self.address = address if address else None
-        self.phones = phones if phones else []
-        self.email = email if email else None
-        self.birthday = birthday if birthday else None
+        self.address = address
+        self.phones = []
+        self.email = email
+        self.birthday = birthday
 
     def add_phone(self, phone):
-        '''
-        Add phone
-
-        :param phone:
-        :return:
-        '''
-
         self.phones.append(Phone(phone))
 
     def get_phones(self):
@@ -169,6 +151,9 @@ class Record:
 
         return f'{self.name.value:<10} | {show_phone:<10} | {show_birthday:^15} | {show_address:<20} | {show_email}'
 
+    def add_email(self, email):
+        self.email = email
+
 
 class ContactBook(UserDict):
     """
@@ -178,38 +163,3 @@ class ContactBook(UserDict):
 
     def add_record(self, record):
         self.data[record.name.value] = record
-
-    def delete_contact(self, name):
-        del self.data[name]
-
-    def address_book_load(self):
-        """
-        Функция загружает адресную книгу при старте.
-
-        Параметры
-        ---------
-        :param:
-        :return:
-        """
-
-        with open('dump.pickle', 'rb') as dump_file:
-            archive_book = pickle.load(dump_file)
-            return archive_book
-
-    def address_book_save(self, archive_book):
-        """
-        Функция сохраняет адресную книгу и завершает программу.
-
-        Параметры
-        ---------
-        :param:
-        :return:
-        """
-
-        with open('dump.pickle', 'wb') as dump_file:
-            pickle.dump(archive_book, dump_file)
-
-        sys.exit()
-
-
-CONTACTS = ContactBook()
