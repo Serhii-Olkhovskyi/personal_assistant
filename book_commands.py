@@ -260,3 +260,13 @@ def list_birthday():
             lst += f'\n{name}: {CONTACTS[name].birthday.value}'
             count += 1
     return lst if count > 0 else f'No one birthday at this period'
+
+def show_birthday():
+    name =  name_input()
+    if name in CONTACTS.data.keys():
+        if CONTACTS[name].birthday:
+            return f"{name} birthday: {CONTACTS[name].birthday.value}"
+        else:
+            return f"Contact '{name}' hasn`t birthday record. Please enter another command to add birthday"
+    else:
+        return f"No records with '{name}' contact found. Type another contact name"
