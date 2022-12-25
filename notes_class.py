@@ -56,7 +56,7 @@ class Notes(UserDict):
             notes['title'] = title
         if text:
             notes['text'] = text
-        if tag:
+        if tag is not None:
             if type(tag) is not list:
                 raise ValueError('"tag" argument must be a list')
             if adding_tags:
