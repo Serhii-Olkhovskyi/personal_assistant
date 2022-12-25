@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, date
 from input_error_handler import input_error
 import re
 
+
 if os.path.exists('dump.pickle'):
     CONTACTS = ContactBook().address_book_load()
 else:
@@ -19,11 +20,15 @@ def name_input():
     """
     while True:
         name = input(f'Please enter contact name: ')
-        if name in CONTACTS.data.keys():
-            print(f"No records with '{name}' contact found. Type another contact name to add phone.")
-        elif not name.isdigit():
-            return name
-        print(f"Name is a mandatory field and must not be a digit.")
+        if name:
+            if name in CONTACTS.data.keys():
+                print(f"No records with '{name}' contact found. Type another contact name to add phone.")
+            elif not name.isdigit():
+                return name
+            else:
+                print(f"Name is a mandatory field and must not be a digit.")
+        else:
+            print("Name is a mandatory field. Please enter name. You didn't type anything.")
 
 
 def address_input():
@@ -120,7 +125,7 @@ def add_contact_func():
     CONTACTS[name].email = Email(email)
     CONTACTS[name].birthday = Birthday(birthday)
 
-    return f"Contact {name} was added with: phones:[{', '.join(phones)}], address: {address}, email: {email}, " \
+    return f"Contact {name} was added with: phones:[{', '.join(phones)}], address: [{address}], email: [{email}], " \
            f"birthday: [{birthday}]."
 
 
@@ -296,7 +301,7 @@ def change_email_func():
             CONTACTS[name].change_email(email)
             return f"{name}`s email is changed to {email}."
         else:
-            print("Please enter email.You didn't write anything.")
+            print("Please enter email.You didn't type anything.")
 
 
 @input_error
@@ -314,7 +319,7 @@ def change_address_func():
             CONTACTS[name].change_adress(address)
             return f"{name}`s address is changed to {address}."
         else:
-            print("Please enter address.You didn't write anything.")
+            print("Please enter address.You didn't type anything.")
 
 
 @input_error
@@ -330,7 +335,7 @@ def change_birthday_func():
             CONTACTS[name].change_birthday(birthday)
             return f"{name}`s birthday is changed to {birthday}."
         else:
-            print("Please enter birthday.You didn't write anything.")
+            print("Please enter birthday.You didn't type anything.")
 
 
 @input_error

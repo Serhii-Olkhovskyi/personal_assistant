@@ -52,8 +52,8 @@ class Phone(Field):
 
     @value.setter
     def value(self, new_value):
-        if not re.fullmatch(r"\+\d{12}", new_value):
-            raise ValueError("Invalid phone number, enter the phone number in the format: (+380123456789)")
+        # if not re.fullmatch(r"\+\d{12}", new_value):
+        #     raise ValueError("Invalid phone number, enter the phone number in the format: (+380123456789)")
         self.__value = new_value
 
 
@@ -71,8 +71,8 @@ class Email(Field):
 
     @value.setter
     def value(self, new_value):
-        if not re.findall(r"[a-zA-Z]{1,}[a-zA-Z0-9._]{1,}[@][a-zA-Z]{1,}[.][a-zA-Z]{2,}", new_value):
-            raise ValueError("Invalid email, enter in the correct format")
+        # if not re.findall(r"[a-zA-Z]{1,}[a-zA-Z0-9._]{1,}[@][a-zA-Z]{1,}[.][a-zA-Z]{2,}", new_value):
+        #     raise ValueError("Invalid email, enter in the correct format")
         self.__value = new_value
 
 
@@ -83,11 +83,12 @@ class Birthday(Field):
 
     @Field.value.setter
     def value(self, value):
-        if re.search(r"\b\d{2}[.]\d{2}[.]\d{4}", value):
-            value_splited = value.split(".")
-            self.__value = date(year=int(value_splited[2]), month=int(value_splited[1]), day=int(value_splited[0]))
-        else:
-            raise Exception("Birthday must be in DD.MM.YYYY format")
+        # if re.search(r"\b\d{2}[.]\d{2}[.]\d{4}", value):
+        #     value_splited = value.split(".")
+        #     self.__value = date(year=int(value_splited[2]), month=int(value_splited[1]), day=int(value_splited[0]))
+        # else:
+        #     raise Exception("Birthday must be in DD.MM.YYYY format")
+        self.__value = value
 
     def __str__(self) -> str:
         return self.__value.strftime("%d.%m.%Y")
