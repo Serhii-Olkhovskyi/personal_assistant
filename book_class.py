@@ -1,7 +1,8 @@
-
 import pickle
 import sys
 from collections import UserDict
+from datetime import date
+import re
 
 class Field:
     """
@@ -28,7 +29,6 @@ class Name(Field):
     `Name` class, a mandatory field with a contact name.
 
     """
-
 
 
 class Address(Field):
@@ -58,6 +58,16 @@ class Birthday(Field):
     `Birthday` class, an optional field with a contact birthday info.
     """
 
+    @Field.value.setter
+    def value(self, value):
+        if re.search(r"\b\d{2}[.]\d{2}[.]\d{4}", value):
+            value_splited = value.split(".")
+            self.__value = date(year=int(value_splited[2]), month=int(value_splited[1]), day=int(value_splited[0]))
+        else:
+            raise Exception("Birthday must be in DD.MM.YYYY format")
+
+    def __str__(self) -> str:
+        return self.__value.strftime("%d.%m.%Y")
 
 
 class Record:
@@ -95,6 +105,34 @@ class Record:
 
     def add_birthday(self, birthday):
         self.birthday = Birthday(birthday)
+
+    def change_phone(self, phone, new_phone):
+        for item in self.phones:
+            if item.value == phone:
+                item.value = new_phone
+
+    def change_email(self, new_email):
+        self.email = Email(new_email)
+
+    def change_address(self, new_address):
+        self.address = Address(new_address)
+
+    def change_birthday(self, new_birthday):
+        self.birthday = Birthday(new_birthday)
+
+    def delete_phone(self, phone):
+        for item in self.phones:
+            if item.value == phone:
+                self.phones.remove(item)
+
+    def delete_email(self):
+        self.email = None
+
+    def delete_address(self):
+        self.address = None
+
+    def delete_birthday(self):
+        self.birthday = None
 
     def get_user_details(self):
         """
@@ -140,6 +178,9 @@ class ContactBook(UserDict):
 
     def add_record(self, record):
         self.data[record.name.value] = record
+
+    def delete_contact(self, name):
+        del self.data[name]
 
     def address_book_load(self):
         """
