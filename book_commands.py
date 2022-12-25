@@ -2,8 +2,9 @@
 import os
 from difflib import get_close_matches
 from book_class import ContactBook, Record, Address, Email, Birthday, CONTACTS
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from input_error_handler import input_error
+import re
 
 if os.path.exists('dump.pickle'):
     CONTACTS = ContactBook().address_book_load()
@@ -11,54 +12,82 @@ else:
     CONTACTS = ContactBook()
 
 
-@input_error
 def name_input():
     """
     Input name
     :return: name
     """
-    name = input(f'Please enter contact name: ')
-    return name
+    while True:
+        name = input(f'Please enter contact name: ')
+        if name in CONTACTS.data.keys():
+            print(f"No records with '{name}' contact found. Type another contact name to add phone.")
+        elif not name.isdigit():
+            return name
+        print(f"Name is a mandatory field and must not be a digit.")
 
 
-@input_error
 def address_input():
     """
     Input address
     :return: address
     """
     address = input(f'Please enter contact address: ')
-    return address
+    if address:
+        return address
+    else:
+        return ''
 
 
-@input_error
 def phones_input():
     """
     Input phones
     :return: phones list
     """
-    phones = input(f'Please enter contact phones: ')
-    return phones.split()
+    while True:
+        phones = input(f'Please enter contact phones: ')
+        if not phones:
+            return []
+        check = True
+        for number in phones.split():
+            if not re.fullmatch(r"\+\d{12}", number):
+                print(f"Invalid phone number:{number}, enter the phone number in the format: (+380123456789)")
+                check = False
+        if check:
+            return phones.split()
 
 
-@input_error
 def email_input():
     """
     Input email
     :return: email
     """
-    email = input(f'Please enter contact email: ')
-    return email
+    while True:
+        email = input(f'Please enter contact email: ')
+        if not email:
+            return ''
+        else:
+            if not re.findall(r"[a-zA-Z]{1,}[a-zA-Z0-9._]{1,}[@][a-zA-Z]{1,}[.][a-zA-Z]{2,}", email):
+                print("Invalid email, enter in the correct format: example@gmail.com")
+            else:
+                return email
 
 
-@input_error
 def birthday_input():
     """
     Input birthday
     :return: birthday
     """
-    birthday = input(f'Please enter contact birthday: ')
-    return birthday
+    while True:
+        birthday = input(f'Please enter contact birthday: ')
+        if not birthday:
+            return ''
+        else:
+            if re.search(r"\b\d{2}[.]\d{2}[.]\d{4}", birthday):
+                value_split = birthday.split(".")
+                birthday = date(year=int(value_split[2]), month=int(value_split[1]), day=int(value_split[0]))
+                return birthday.strftime("%d.%m.%Y")
+            else:
+                print("Birthday must be in DD.MM.YYYY format")
 
 
 def hello_func():
@@ -78,29 +107,21 @@ def add_contact_func():
     """
 
     name = name_input()
-    address = address_input()
     phones = phones_input()
     email = email_input()
+    address = address_input()
     birthday = birthday_input()
 
-    if name not in CONTACTS.data.keys():
-        CONTACTS.add_record(Record(name))
-        if phones:
-            for phone in phones:
-                if phone not in CONTACTS[name].get_phones():
-                    CONTACTS[name].add_phone(phone)
+    CONTACTS.add_record(Record(name))
+    for phone in phones:
+        if phone not in CONTACTS[name].get_phones():
+            CONTACTS[name].add_phone(phone)
+    CONTACTS[name].address = Address(address)
+    CONTACTS[name].email = Email(email)
+    CONTACTS[name].birthday = Birthday(birthday)
 
-        if address:
-            CONTACTS[name].address = Address(address)
-
-        if email:
-            CONTACTS[name].email = Email(email)
-
-        if birthday:
-            CONTACTS[name].birthday = Birthday(birthday)
-
-        return f"Contact {name} was added with: phones:[{', '.join(phones)}], address: {address}, email: {email}, " \
-               f"birthday: [{birthday}] "
+    return f"Contact {name} was added with: phones:[{', '.join(phones)}], address: {address}, email: {email}, " \
+           f"birthday: [{birthday}]."
 
 
 @input_error
@@ -113,14 +134,10 @@ def add_phone_func():
     name = name_input()
     phones = phones_input()
 
-    if name in CONTACTS.data.keys():
-        if phones:
-            for phone in phones:
-                if phone not in CONTACTS[name].get_phones():
-                    CONTACTS[name].add_phone(phone)
-                return f"Phones:[{', '.join(phones)}] were added to contact '{name}'."
-    else:
-        raise KeyError(f"No records with '{name}' contact found. Type another contact name to add phone.")
+    for phone in phones:
+        if phone not in CONTACTS[name].get_phones():
+            CONTACTS[name].add_phone(phone)
+    return f"Phones:[{', '.join(phones)}] were added to contact '{name}'."
 
 
 @input_error
@@ -133,16 +150,8 @@ def add_address_func():
     name = name_input()
     address = address_input()
 
-    if name in CONTACTS.data.keys():
-        if address:
-            if not CONTACTS[name].address:
-                CONTACTS[name].add_address(address)
-                return f"Address:{address} was added to contact '{name}'."
-            else:
-                raise ValueError(f"Contact '{name}' already has address record. Please enter another command to "
-                                 f"change address.")
-    else:
-        raise KeyError(f"No records with '{name}' contact found. Type another contact name to add address.")
+    CONTACTS[name].add_address(address)
+    return f"Address:{address} was added to contact '{name}'."
 
 
 @input_error
@@ -155,16 +164,12 @@ def add_email_func():
     name = name_input()
     email = email_input()
 
-    if name in CONTACTS.data.keys():
-        if email:
-            if not CONTACTS[name].email:
-                CONTACTS[name].add_email(email)
-                return f"Email:{email} was added to contact '{name}'."
-            else:
-                raise ValueError(f"Contact '{name}' already has email record. Please enter another command to "
-                                 f"change email.")
+    if not CONTACTS[name].email:
+        CONTACTS[name].add_email(email)
+        return f"Email:{email} was added to contact '{name}'."
     else:
-        raise KeyError(f"No records with '{name}' contact found. Type another contact name to add email.")
+        raise ValueError(f"Contact '{name}' already has email record. Please enter another command to "
+                         f"change email.")
 
 
 @input_error
@@ -177,16 +182,12 @@ def add_birthday_func():
     name = name_input()
     birthday = birthday_input()
 
-    if name in CONTACTS.data.keys():
-        if birthday:
-            if not CONTACTS[name].birthday:
-                CONTACTS[name].add_birthday(birthday)
-                return f"Birthday:{birthday} was added to contact '{name}'."
-            else:
-                raise ValueError(f"Contact '{name}' already has address record. Please enter another command to "
-                                 f"change birthday.")
+    if not CONTACTS[name].birthday:
+        CONTACTS[name].add_birthday(birthday)
+        return f"Birthday:{birthday} was added to contact '{name}'."
     else:
-        raise KeyError(f"No records with '{name}' contact found. Type another contact name to add birthday.")
+        raise ValueError(f"Contact '{name}' already has address record. Please enter another command to "
+                         f"change birthday.")
 
 
 @input_error
@@ -267,18 +268,17 @@ def change_phone_func():
     """
 
     name = name_input()
-    phone_old = input(f'Please enter phone number to change: ')
-    phone_new = input(f'Please enter new phone number: ')
 
-    if name in CONTACTS.data.keys():
-        if phone_old and phone_new:
-            if phone_old in CONTACTS[name].get_phones():
-                CONTACTS[name].change_phone(phone_old, phone_new)
-                return f"{name}`s phone is changed from {phone_old} to {phone_new}."
-            else:
-                raise ValueError(f"Contact '{name}' doesn't have such phone number: {phone_old}.")
-    else:
-        raise KeyError(f"No records with '{name}' contact found. Type another contact name to change phone.")
+    while True:
+        print(f'Contact number to change.')
+        phone_old = phones_input()
+        if phone_old in CONTACTS[name].get_phones():
+            print(f'New contact number to record.')
+            phone_new = phones_input()
+            CONTACTS[name].change_phone(phone_old, phone_new)
+            return f"{name}`s phone is changed from {phone_old} to {phone_new}."
+        else:
+            print(f"Contact '{name}' doesn't have such phone number: {phone_old}.")
 
 
 @input_error
@@ -289,14 +289,14 @@ def change_email_func():
     """
 
     name = name_input()
-    email = email_input()
 
-    if name in CONTACTS.data.keys():
+    while True:
+        email = email_input()
         if email:
             CONTACTS[name].change_email(email)
             return f"{name}`s email is changed to {email}."
-    else:
-        raise KeyError(f"No records with '{name}' contact found. Type another contact name to change email.")
+        else:
+            print("Please enter email.You didn't write anything.")
 
 
 @input_error
@@ -307,14 +307,14 @@ def change_address_func():
     """
 
     name = name_input()
-    address = address_input()
 
-    if name in CONTACTS.data.keys():
+    while True:
+        address = address_input()
         if address:
             CONTACTS[name].change_adress(address)
             return f"{name}`s address is changed to {address}."
-    else:
-        raise KeyError(f"No records with '{name}' contact found. Type another contact name to change address.")
+        else:
+            print("Please enter address.You didn't write anything.")
 
 
 @input_error
@@ -323,16 +323,14 @@ def change_birthday_func():
     Command to change birthday of the contact
     :return: string
     """
-
     name = name_input()
-    birthday = birthday_input()
-
-    if name in CONTACTS.data.keys():
+    while True:
+        birthday = birthday_input()
         if birthday:
             CONTACTS[name].change_birthday(birthday)
             return f"{name}`s birthday is changed to {birthday}."
-    else:
-        raise KeyError(f"No records with '{name}' contact found. Type another contact name to change birthday.")
+        else:
+            print("Please enter birthday.You didn't write anything.")
 
 
 @input_error
@@ -341,18 +339,16 @@ def delete_phone_func():
     Command to delete phone of the contact
     :return: string
     """
-
     name = name_input()
-    phone = phones_input()
 
-    if name in CONTACTS.data.keys():
+    while True:
+        print("Phone to delete.")
+        phone = phones_input()
         if phone in CONTACTS[name].get_phones():
             CONTACTS[name].delete_phone(phone)
             return f"{name}`s phone number '{phone}' was deleted."
         else:
-            return f"{name} have no such phone number '{phone}'."
-    else:
-        raise KeyError(f"No records with '{name}' contact found. Type another contact name to delete phone.")
+            print(f"{name} have no such phone number '{phone}'.")
 
 
 @input_error
@@ -361,14 +357,9 @@ def delete_email_func():
     Command to delete email of the contact
     :return: string
     """
-
     name = name_input()
-
-    if name in CONTACTS.data.keys():
-        CONTACTS[name].delete_email()
-        return f"{name}`s email is deleted."
-    else:
-        raise KeyError(f"No records with '{name}' contact found. Type another contact name to delete email.")
+    CONTACTS[name].delete_email()
+    return f"{name}`s email is deleted."
 
 
 @input_error
@@ -377,14 +368,9 @@ def delete_address_func():
     Command to delete address of the contact
     :return: string
     """
-
     name = name_input()
-
-    if name in CONTACTS.data.keys():
-        CONTACTS[name].delete_address()
-        return f"{name}`s address is deleted."
-    else:
-        raise KeyError(f"No records with '{name}' contact found. Type another contact name to delete address.")
+    CONTACTS[name].delete_address()
+    return f"{name}`s address is deleted."
 
 
 @input_error
@@ -393,14 +379,9 @@ def delete_birthday_func():
     Command to delete birthday of the contact
     :return: string
     """
-
     name = name_input()
-
-    if name in CONTACTS.data.keys():
-        CONTACTS[name].delete_birthday()
-        return f"{name}`s `birthday` is deleted."
-    else:
-        raise KeyError(f"No records with '{name}' contact found. Type another contact name to delete birthday.")
+    CONTACTS[name].delete_birthday()
+    return f"{name}`s `birthday` is deleted."
 
 
 @input_error
@@ -409,18 +390,14 @@ def delete_contact_func():
     Command to delete contact
     :return: string
     """
-
     name = name_input()
+    CONTACTS.delete_contact(name)
+    return f"Contact '{name}' is deleted."
 
-    if name in CONTACTS.data.keys():
-        CONTACTS.delete_contact(name)
-        return f"Contact '{name}' is deleted."
-    else:
-        raise KeyError(f"No records with '{name}' contact found. Type another contact name.")
 
 @input_error
 def show_birthday():
-    name =  name_input()
+    name = name_input()
     if name in CONTACTS.data.keys():
         if CONTACTS[name].birthday:
             today = datetime.today()
@@ -437,6 +414,7 @@ def show_birthday():
     else:
         return f"No records with '{name}' contact found. Type another contact name"
 
+
 @input_error
 def phone():
     name = name_input()
@@ -447,6 +425,7 @@ def phone():
             return f"Contact '{name}' hasn't any phone record. Please enter another command to add phone"
     else:
         return f"No records with '{name}' contact found. Type another contact name"
+
 
 def find_contacts(name):
     data = name.strip().lower()
@@ -463,8 +442,8 @@ def find_contacts(name):
 
     return _show_contact(matches_list)
 
-def _show_contact(matches):
 
+def _show_contact(matches):
     if len(matches) == 0 or matches is None:
         return f"Збігів не знайдено."
 

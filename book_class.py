@@ -76,7 +76,6 @@ class Email(Field):
         self.__value = new_value
 
 
-
 class Birthday(Field):
     """
     `Birthday` class, an optional field with a contact birthday info.
