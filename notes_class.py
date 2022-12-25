@@ -1,5 +1,6 @@
 from collections import UserDict
 import time
+import pickle
 
 
 class Notes(UserDict):
@@ -12,6 +13,24 @@ class Notes(UserDict):
           'text': 'text',
           'time': 'unix time'}
     }"""
+
+    def __init__(self):
+        super().__init__()
+        self.__unpacking_notes()
+
+    def __unpacking_notes(self):
+        """Распаковует сохранённый класс Notes из файла 'notes.pic'
+        Если файл существует, переопределяет self"""
+        try:
+            with open('notes.pic', 'rb') as f:
+                self.data = pickle.load(f).data
+        except FileNotFoundError:
+            pass
+
+    def __packing_notes(self):
+        """Сохраняет класс AddressBook в файл 'address_book.pic'"""
+        with open('notes.pic', 'wb') as f:
+            pickle.dump(self, f)
 
     def __last_id(self) -> int:
         """Возвращает последний из имеющихся id"""
@@ -35,11 +54,15 @@ class Notes(UserDict):
             'tag': tag,
             'time': time.time()
         }
+        self.__packing_notes()
 
     def delete_by_id(self, notes_id):
         """Удаляет заметку по ключу и возвращает удалённую заметку
         Если заметка не найдена, возвращает None"""
-        return self.data.pop(notes_id, None)
+        notes = self.data.pop(notes_id, None)
+        if notes:
+            self.__packing_notes()
+        return notes
 
     def edit_notes(self, notes_id, title=None, text=None, tag=None, adding_tags=True):
         """
@@ -65,6 +88,7 @@ class Notes(UserDict):
                 notes['tag'] = tag
         notes['time'] = time.time()
         self.data[notes_id] = notes
+        self.__packing_notes()
         return notes
 
     def search(self, search_str: str, n=10) -> list:
