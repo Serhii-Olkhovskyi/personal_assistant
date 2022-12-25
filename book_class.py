@@ -1,5 +1,6 @@
 import pickle
 import sys
+from out_table import show_out_table
 from collections import UserDict
 from datetime import date
 import re
@@ -74,7 +75,6 @@ class Email(Field):
         if not re.findall(r"[a-zA-Z]{1,}[a-zA-Z0-9._]{1,}[@][a-zA-Z]{1,}[.][a-zA-Z]{2,}", new_value):
             raise ValueError("Invalid email, enter in the correct format")
         self.__value = new_value
-
 
 
 class Birthday(Field):
@@ -210,6 +210,7 @@ class Record:
         :return: str phone
         """
 
+        res_list = []
         show_phone = ''
         show_birthday = ''
         show_address = ''
@@ -233,7 +234,13 @@ class Record:
         else:
             show_email += f'{self.email.value}'
 
-        return f'{self.name.value:<10} | {show_phone:<10} | {show_birthday:^15} | {show_address:<20} | {show_email}'
+        res_list.append(self.name.value)
+        res_list.append(show_phone)
+        res_list.append(show_birthday)
+        res_list.append(show_address)
+        res_list.append(show_email)
+
+        return res_list
 
 
 class ContactBook(UserDict):

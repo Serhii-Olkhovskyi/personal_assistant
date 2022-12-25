@@ -1,4 +1,4 @@
-from tabulate import tabulate
+from out_table import show_out_table
 
 
 def all_commands():
@@ -9,7 +9,6 @@ def all_commands():
     """
 
     help_list = [
-        ('DESCRIPTION', 'COMMAND', 'PARAMETER 1', 'PARAMETER 2', 'PARAMETER 3'),
         ('Add contact', 'add', 'name', 'phone_number', ''),
         ('Add phone for contact', 'add_phone', 'name', 'phone_number', ''),
         ('Add birthday contact', 'add_birthday', 'name', 'YYYY.MM.DD', ''),
@@ -27,5 +26,7 @@ def all_commands():
         ('Help on commands', 'help', '', '', '')
     ]
 
-    print(tabulate(help_list, headers='firstrow', tablefmt='pipe', stralign='center'))
-    return 'Enter new command.'
+    table_header = ['DESCRIPTION', 'COMMAND', 'PARAMETER 1', 'PARAMETER 2', 'PARAMETER 3']
+    show_out_table(help_list, table_header)
+
+    return f'.'
