@@ -15,6 +15,7 @@ def main():
     preview_text = Figlet(font='slant')
     print(preview_text.renderText('ProPy10'))
     print(f'Hello! Welcome to your Personal assistant. How can I help you?')
+    print('Тo display all commands on the screen type: help')
 
     while True:
         command = input("Please enter the command: ").lower().strip()

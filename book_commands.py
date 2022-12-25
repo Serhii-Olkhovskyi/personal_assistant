@@ -1,11 +1,13 @@
 # All ContactBook functions
 import os
+from tabulate import tabulate
 from difflib import get_close_matches
 from book_class import ContactBook, Record, Address, Email, Birthday, CONTACTS
 from datetime import datetime, timedelta, date
 from input_error_handler import input_error
 import re
 
+from out_table import show_out_table
 
 if os.path.exists('dump.pickle'):
     CONTACTS = ContactBook().address_book_load()
@@ -238,9 +240,12 @@ def show_all_info():
     :param:
     :return:
     """
-
+    info_data = []
     for users in CONTACTS.values():
-        print(users.get_user_details(), )
+        info_data.append(users.get_user_details())
+
+    table_header = ('Name', 'Phones', 'Birthday', 'Email', 'Address')
+    show_out_table(info_data, table_header)
 
     return f'ok.'
 
@@ -398,6 +403,7 @@ def delete_contact_func():
     name = name_input()
     CONTACTS.delete_contact(name)
     return f"Contact '{name}' is deleted."
+
 
 
 @input_error
