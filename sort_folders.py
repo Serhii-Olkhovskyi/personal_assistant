@@ -136,6 +136,13 @@ def out_files(path_folders, folders):
 
 
 def list_of_files(way_consoles):
+    """
+    func
+
+    :param way_consoles:
+    :return:
+    """
+
     out_folders(list_name_folder[0])
     out_files(way_consoles, list_name_folder[0])
 
@@ -171,7 +178,7 @@ def main():
         return 'qwerty'  # неправильный путь и в дальнейшем выводим сообщение что "Введен неверный путь к папке"
 
 
-def new_folders(name_folder, way_consoles):  # Функция создает папки если их нет
+def new_folders(name_folder, way_consoles):
     """
     Створюємо папки якщо їх нема.
 
