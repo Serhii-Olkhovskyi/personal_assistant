@@ -2,6 +2,7 @@
 import os
 from difflib import get_close_matches
 from book_class import ContactBook, Record, Address, Email, Birthday, CONTACTS
+from datetime import datetime, timedelta
 
 if os.path.exists('dump.pickle'):
     CONTACTS = ContactBook().address_book_load()
@@ -241,3 +242,21 @@ def show_all_info():
         print(users.get_user_details(), )
 
     return f'ok.'
+
+def list_birthday():
+    days = int(input(f'Please enter number of days: '))
+    today = datetime.today()
+    end_day = today + timedelta(days)
+    count = 0
+    lst = "Birthday of this period:"
+    for name in CONTACTS:
+        bday = CONTACTS[name].birthday.value
+        bday = datetime.strptime(bday, "%Y.%m.%d").date()
+        if datetime(today.year, bday.month, bday.day) <= today:
+            nday = datetime(today.year + 1, bday.month, bday.day)
+        else:
+            nday = datetime(today.year, bday.month, bday.day)
+        if nday <= end_day:
+            lst += f'\n{name}: {CONTACTS[name].birthday.value}'
+            count += 1
+    return lst if count > 0 else f'No one birthday at this period'
