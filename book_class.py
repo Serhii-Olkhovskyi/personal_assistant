@@ -2,7 +2,6 @@ import pickle
 import sys
 from collections import UserDict
 
-
 class Field:
     """
     `Field` class, which is the parent for all fields,
@@ -57,7 +56,7 @@ class Birthday(Field):
     """
     `Birthday` class, an optional field with a contact birthday info.
     """
-    pass
+
 
 
 class Record:
