@@ -14,6 +14,7 @@ def main():
 
     preview_text = Figlet(font='slant')
     print(preview_text.renderText('ProPy10'))
+    print(f'Hello! Welcome to your Personal assistant. How can I help you?')
 
     while True:
         command = input("Please enter the command: ").lower().strip()
