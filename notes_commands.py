@@ -207,7 +207,7 @@ def del_note_command():
 
 COMMAND_NOTES = {
     'add note': add_note_commands,
-    'search note': search_note_command,
+    'find note': search_note_command,
     'show notes': show_notes_command,
     'edit note': edit_note_command,
     'delete note': del_note_command

@@ -25,7 +25,7 @@ def all_commands():
         ('Save contacts and close the program', 'exit', '', '', ''),
         ('Save contacts and close the program', 'good_bye', '', '', ''),
         ('Add note', 'add note', '', '', ''),
-        ('Search by notes', 'search note', '', '', ''),
+        ('Search by notes', 'find note', '', '', ''),
         ('Show all notes', 'show notes', '', '', ''),
         ('Edit note', 'edit note', '', '', ''),
         ('Delete note', 'delete note', '', '', ''),
