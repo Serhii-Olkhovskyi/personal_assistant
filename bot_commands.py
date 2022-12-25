@@ -16,7 +16,7 @@ COMMANDS = {
     # 'change contact': change,
     # 'delete contact': delete_phone,
     'show all contacts': book_commands.show_all_info,
-    # 'phone': phone,
+    'phone': book_commands.phone,
     'birthday': book_commands.show_birthday,
     'list': book_commands.list_birthday,
     'save': book_commands.save_contacts_to_file,
