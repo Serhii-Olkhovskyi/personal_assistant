@@ -18,7 +18,7 @@ def main():
     print('Тo display all commands on the screen type: help')
 
     while True:
-        command = input("Please enter the command: ").lower().strip()
+        command = input("\033[0mPlease enter the command: ").lower().strip()
         try:
             for key in COMMANDS:
                 if command.startswith(key):
