@@ -1,6 +1,6 @@
 from pyfiglet import Figlet
-from bot_commands import COMMANDS
-from book_commands import find_same_input
+from personal_assistant.bot_commands import COMMANDS
+from personal_assistant.book_commands import find_same_input
 
 
 def main():
