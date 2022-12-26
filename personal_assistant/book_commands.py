@@ -20,7 +20,7 @@ def name_input():
     :return: name
     """
     while True:
-        name = input(f'Please enter contact name: ')
+        name = input(f'Please enter contact name: ').capitalize()
         if name:
             if name in CONTACTS.data.keys():
                 print(f"No records with '{name}' contact found. Type another contact name to add phone.")
@@ -126,7 +126,7 @@ def add_contact_func():
     CONTACTS[name].email = Email(email)
     CONTACTS[name].birthday = Birthday(birthday)
 
-    return f"Contact {name} was added with: phones:[{', '.join(phones)}], address: [{address}], email: [{email}], " \
+    return f"Contact '{name}' was added with: phones:[{', '.join(phones)}], address: [{address}], email: [{email}], " \
            f"birthday: [{birthday}]."
 
 
