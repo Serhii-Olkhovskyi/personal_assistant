@@ -9,29 +9,36 @@ def all_commands():
     """
 
     help_list = [
-        ('Add contact', 'add', 'name', 'phone_number', ''),
-        ('Add phone for contact', 'add_phone', 'name', 'phone_number', ''),
-        ('Add birthday contact', 'add_birthday', 'name', 'YYYY.MM.DD', ''),
-        ('Dell phone for contact', 'dell_phone', 'name', 'phone_number', ''),
-        ('Change phone contact', 'change', 'name', 'old_phone_number', 'new_phone_number'),
-        ('Show phone contact', 'phone', 'name', '', ''),
-        ('Show all contacts', 'show_all', '', '', ''),
-        ('Show how many days until birthday', 'show_birthday', 'name', '', ''),
-        ('Show paging output', 'show_page', 'number', '', ''),
-        ('Search by content in a book', 'search', 'text', '', ''),
-        ('Greetings', 'hello', '', '', ''),
-        ('Save contacts and close the program', 'close', '', '', ''),
-        ('Save contacts and close the program', 'exit', '', '', ''),
-        ('Save contacts and close the program', 'good_bye', '', '', ''),
-        ('Add note', 'add note', '', '', ''),
-        ('Search by notes', 'find note', '', '', ''),
-        ('Show all notes', 'show notes', '', '', ''),
-        ('Edit note', 'edit note', '', '', ''),
-        ('Delete note', 'delete note', '', '', ''),
-        ('Help on commands', 'help', '', '', '')
-    ]
+        ('hello', 'Greeting'),
+        ('exit', 'Exit the program and save the data'),
+        ('close', 'Close program and save data'),
+        ('good bye', 'Close program and save data'),
+        ('add contact', 'Create a new contact with the following fields'),
+        ('add phone', 'Add a new phone number to an existing contact'),
+        ('add address', 'Add an address to an existing contact'),
+        ('add email', 'Add an email address to an existing contact'),
+        ('add birthday', 'Add a birthday to an existing contact'),
+        ('add note', 'Add notes'),
+        ('change phone', 'Change the phone number of an existing contact'),
+        ('change address', 'Change the address of an existing contact'),
+        ('change email', 'Change the mailbox of an existing contact'),
+        ('change birthday', 'Change the birthday of an existing contact'),
+        ('edit note', 'Edit notes'),
+        ('delete phone', 'Delete the phone number of an existing contact'),
+        ('delete address', 'Delete an address from an existing contact'),
+        ('delete email', "Delete an existing contact's mailbox"),
+        ('delete birthday', 'Delete the birthday of an existing contact'),
+        ('delete contact', 'Delete an existing contact'),
+        ('delete note', 'Delete notes'),
+        ('find note', 'Find notes'),
+        ('show all contacts', 'View all contacts'),
+        ('show notes', 'View notes'),
+        ('phone', 'Look up a phone number based on the name of an existing contact'),
+        ('birthday', 'List users whose birthday is in N days'),
+        ('help', 'Command table')
+        ]
 
-    table_header = ['DESCRIPTION', 'COMMAND', 'PARAMETER 1', 'PARAMETER 2', 'PARAMETER 3']
+    table_header = ['COMMAND', 'DESCRIPTION']
     show_out_table(help_list, table_header)
 
     return f'.'
