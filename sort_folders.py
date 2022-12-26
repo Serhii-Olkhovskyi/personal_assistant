@@ -9,10 +9,8 @@ list_zip = ['.zip', '.gz', '.tar']
 list_other = list_doc + list_image + list_music + list_video + list_zip
 list_name_folder = ['Documents', 'Images', 'Musics', 'Videos', 'Archives', 'Others']
 
-input_path = input('Enter the path to the folder: ')
 
-
-def file_remove(file_ob):
+def file_remove(file_ob, path):
     """
     Переносимо файли по папкам.
 
@@ -22,7 +20,7 @@ def file_remove(file_ob):
     :return:
     """
 
-    way_console = Path(main())
+    way_console = Path(main(path))
     if file_ob.suffix in list_zip:
         files_unpack(way_console, file_ob)
     elif file_ob.suffix in list_doc:
@@ -162,7 +160,7 @@ def list_of_files(way_consoles):
     out_files(way_consoles, list_name_folder[5])
 
 
-def main():
+def main(path):
     """
     Рахуємо шлях до папки.
 
@@ -173,7 +171,7 @@ def main():
     """
 
     try:
-        return input_path
+        return path
     except IndexError:  # Ошибку IndexError (аргументы не передали) "переводим" в
         return 'qwerty'  # неправильный путь и в дальнейшем выводим сообщение что "Введен неверный путь к папке"
 
@@ -232,7 +230,7 @@ def normalize(way_consoles):
             element.replace(element.parent / new_file)
 
 
-def parsing(way_console):
+def parsing(way_console, path):
     """
     Рекурсивно проходимось по папкам та передаєм файли у функцію file_remove.
 
@@ -244,16 +242,17 @@ def parsing(way_console):
 
     for file_ob in way_console.glob('*'):
         if file_ob.is_file():
-            file_remove(file_ob)
+            file_remove(file_ob, path)
         elif file_ob.is_dir():
-            parsing(file_ob)
+            parsing(file_ob, path)
 
 
 def run():
-    way_console = Path(main())
+    input_path = input('Enter the path to the folder: ')
+    way_console = Path(main(input_path))
     if way_console.is_dir():
         folder_create(way_console)
-        parsing(way_console)
+        parsing(way_console, input_path)
         folders_dell(way_console)
         normalize(way_console)
         list_of_files(way_console)
