@@ -1,6 +1,5 @@
 # All ContactBook functions
 import os
-from tabulate import tabulate
 from difflib import get_close_matches
 from book_class import ContactBook, Record, Address, Email, Birthday, CONTACTS
 from datetime import datetime, timedelta, date

@@ -1,7 +1,9 @@
 # Bot commands associated with ContactBook, Notes, Sort folders
 import book_commands
+import sort_folders
 from help import all_commands
 from notes_commands import COMMAND_NOTES
+
 
 COMMANDS = {
     'hello': book_commands.hello_func,
@@ -27,7 +29,8 @@ COMMANDS = {
     'phone': book_commands.phone,
     'birthday': book_commands.show_birthday,
     'list': book_commands.list_birthday,
-    'search': book_commands.find_contacts
+    'search': book_commands.find_contacts,
+    'sort': sort_folders.run,
 }
 
 COMMANDS.update(COMMAND_NOTES)
