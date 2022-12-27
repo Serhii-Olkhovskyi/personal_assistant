@@ -28,7 +28,6 @@ A list of all commands and their syntax can be found **[here](./help_comands.md)
    The program can prompt the user for commands in case of incorrect input.
    ```
 2. Notes:<br>
-<br>
     * creating a note (Name, text of the note itself, tags - if necessary)
     * search for a note by title, text, tags
     * note editing
