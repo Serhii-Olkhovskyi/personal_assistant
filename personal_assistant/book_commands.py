@@ -28,10 +28,8 @@ def name_input(add_contact=None):
                 print(f"No records with '{name}' contact found.")
             elif not name.isdigit():
                 return name
-            else:
-                print(f"Name is a mandatory field and must not be a digit.")
-        else:
-            print("Name is a mandatory field. Please enter name. You didn't type anything.")
+            print(f"Name is a mandatory field and must not be a digit.")
+        print("Name is a mandatory field. Please enter name. You didn't type anything.")
 
 
 def address_input():
@@ -73,8 +71,7 @@ def email_input():
         else:
             if not re.findall(r"[a-zA-Z]{1,}[a-zA-Z0-9._]{1,}[@][a-zA-Z]{1,}[.][a-zA-Z]{2,}", email):
                 print("Invalid email, enter in the correct format: example@gmail.com")
-            else:
-                return email
+            return email
 
 
 def birthday_input():
@@ -91,8 +88,7 @@ def birthday_input():
                 value_split = birthday.split(".")
                 birthday = date(year=int(value_split[2]), month=int(value_split[1]), day=int(value_split[0]))
                 return birthday.strftime("%d.%m.%Y")
-            else:
-                print("Birthday must be in DD.MM.YYYY format")
+            print("Birthday must be in DD.MM.YYYY format")
 
 
 def hello_func():
@@ -413,10 +409,8 @@ def show_birthday():
             timediff = (nday - today).days + 1
             # timediff = (nday - today).days + 1 if (today - nday).days < 0 else (datetime(nday.year + 1, nday.month, nday.day) - today).days + 1
             return f'{timediff} days till {name} birthday left!'
-        else:
-            return f"Contact '{name}' hasn`t birthday record. Please enter another command to add birthday"
-    else:
-        return f"No records with '{name}' contact found. Type another contact name"
+        return f"Contact '{name}' hasn`t birthday record. Please enter another command to add birthday"
+    return f"No records with '{name}' contact found. Type another contact name"
 
 
 @input_error
@@ -425,13 +419,12 @@ def phone():
     if name in CONTACTS.data.keys():
         if CONTACTS[name].phones:
             return f"{name}: {', '.join([phone.value for phone in CONTACTS[name].phones])}"
-        else:
-            return f"Contact '{name}' hasn't any phone record. Please enter another command to add phone"
-    else:
-        return f"No records with '{name}' contact found. Type another contact name"
+        return f"Contact '{name}' hasn't any phone record. Please enter another command to add phone"
+    return f"No records with '{name}' contact found. Type another contact name"
 
 
-def find_contacts(name):
+def find_contacts():
+    name = input("enter the contact name to search: ")
     data = name.strip().lower()
     matches_list = []
     for record in CONTACTS.values():
