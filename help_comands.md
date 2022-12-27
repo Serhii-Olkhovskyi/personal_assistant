@@ -38,7 +38,6 @@ In the application, this list can be called up with the `help` command
 |  add note   | add notes    |
 | delete note | delete notes |
 |  edit note  | edit notes   |
-|  edit note  | edit notes   |
 |  find note  | find notes   |
 | show notes  | view notes   |
 
