@@ -1,10 +1,8 @@
 # PERSONAL ASSISTANT
 
----
 
 ## About
 
----
 PERSONAL ASSISTANT is a console application.
 
 The console application uses a command line interface.
