@@ -441,13 +441,10 @@ def find_contacts():
 
 
 def _show_contact(matches):
-    if len(matches) == 0 or matches is None:
+    if not matches:
         return f"Збігів не знайдено."
-
-    elif len(matches) > 0:
+    else:
         return_text = ""
-
         for match in matches:
             return_text += f"Збіг в контакті - {match}\n"
-
         return return_text
