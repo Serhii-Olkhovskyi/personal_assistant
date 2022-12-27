@@ -38,7 +38,7 @@ A list of all commands and their syntax can be found **[here](./help_comands.md)
    * sorting files into folders according to their extension<br>
    <br>
    To correctly save contacts and notes, you must stop the program
-   only with built-in commands: `exit`, close, good bye.<br>
+   only with built-in commands: `exit` , close, good bye.<br>
    All information will be saved automatically.
 
 ## Developers
