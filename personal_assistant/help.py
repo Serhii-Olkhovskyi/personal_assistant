@@ -31,6 +31,7 @@ def all_commands():
         ('Delete the phone number of an existing contact', 'delete phone'),
         ('Edit notes', 'edit note'),
         ('Exit the program and save the data', 'exit'),
+        ('File sorting', 'sort'),
         ('Find notes', 'find note'),
         ('Greeting', 'hello'),
         ('List users whose birthday is in N days', 'list'),
