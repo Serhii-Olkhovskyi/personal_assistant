@@ -19,7 +19,6 @@ A list of all commands and their syntax can be found **[here](./help_comands.md)
 
 ### Possibilities:<br>
 1. The contact book has the following functionality:<br>
-   <br>
     * creating a contact card (name, phone number, birthday, email, address)
     * adding a phone number
     * change contact card
@@ -34,7 +33,6 @@ A list of all commands and their syntax can be found **[here](./help_comands.md)
     * deleting a note<br>
    <br>
 3. File editor:<br>
-   <br>
    * folder creation
    * unzipping files
    * sorting files into folders according to their extension<br>
