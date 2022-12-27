@@ -1,9 +1,6 @@
 import pickle
 import sys
-from out_table import show_out_table
 from collections import UserDict
-from datetime import date
-import re
 
 
 class Field:
@@ -53,6 +50,7 @@ class Email(Field):
     """
     `Email` class, an optional field with a contact email address.
     """
+
     @Field.value.setter
     def value(self, new_value):
         self._value = new_value
@@ -184,12 +182,12 @@ class Record:
 
     def get_user_details(self):
         """
-        Метод преобразует phones и дату в строку
+        The method converts phones and date to a list.
 
-        Параметры
+        Parameters
         ---------
         :param:
-        :return: str phone
+        :return: list res_list
         """
 
         res_list = []
@@ -231,6 +229,10 @@ class ContactBook(UserDict):
     and is responsible for the logic of searching for records in this class.
     """
 
+    def __init__(self):
+        super().__init__()
+        self.address_book_load()
+
     def add_record(self, record):
         """
         Add record to contact book
@@ -247,23 +249,23 @@ class ContactBook(UserDict):
 
     def address_book_load(self):
         """
-        Функция загружает адресную книгу при старте.
+        The function loads the address book at startup.
 
-        Параметры
         ---------
         :param:
         :return:
         """
 
-        with open('dump.pickle', 'rb') as dump_file:
-            archive_book = pickle.load(dump_file)
-            return archive_book
+        try:
+            with open('dump.pickle', 'rb') as dump_file:
+                self.data = pickle.load(dump_file)
+        except FileNotFoundError:
+            pass
 
     def address_book_save(self, archive_book):
         """
-        Функция сохраняет адресную книгу и завершает программу.
+        The function saves the address book and ends the program.
 
-        Параметры
         ---------
         :param:
         :return:

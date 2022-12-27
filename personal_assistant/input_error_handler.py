@@ -9,8 +9,8 @@ def input_error(func):
 
     Параметры
     ---------
-    :param func: Функция ввода от пользователя.
-    :return: Вывод результата функции ввода или вывод ошибки с повторным вводом данных.
+    :param func: User input function.
+    :return: Outputting the result of an input function or outputting an error with re-entry.
     """
 
     def wrapper(*args, **kwargs):

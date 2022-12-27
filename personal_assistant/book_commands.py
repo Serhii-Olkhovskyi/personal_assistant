@@ -5,13 +5,7 @@ from book_class import ContactBook, Record, Address, Email, Birthday, CONTACTS
 from datetime import datetime, timedelta, date
 from input_error_handler import input_error
 import re
-
 from out_table import show_out_table
-
-if os.path.exists('dump.pickle'):
-    CONTACTS = ContactBook().address_book_load()
-else:
-    CONTACTS = ContactBook()
 
 
 def name_input(add_contact=None):
