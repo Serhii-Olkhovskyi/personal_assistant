@@ -16,7 +16,7 @@ A list of all commands and their syntax can be found **[here](./help.md)**.<br>
 
 ## Documentation
 
----
+
 ### Possibilities:<br>
 1. The contact book has the following functionality:<br>
    <br>
@@ -46,7 +46,7 @@ A list of all commands and their syntax can be found **[here](./help.md)**.<br>
 
 ## Developers
 
----
+
 ![logo](./images/logo_white.png)<br>
 ## [Dmitriy Fialko](https://github.com/dmitriyfialko)<br>
 ## [Mykhail Palkin](https://github.com/Mephod1y)<br>
@@ -62,6 +62,5 @@ A list of all commands and their syntax can be found **[here](./help.md)**.<br>
 
 ## License
 
----
 
 #### Project Project-Personal_assistant is distributed under the MIT license.
