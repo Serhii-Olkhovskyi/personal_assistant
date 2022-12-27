@@ -119,8 +119,7 @@ class Record:
         """
         Contact phones list
         """
-        all_phones = [phone.value for phone in self.phones]
-        return all_phones
+        return [phone.value for phone in self.phones]
 
     def add_email(self, email):
         """
