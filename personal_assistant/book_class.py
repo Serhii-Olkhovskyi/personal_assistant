@@ -101,7 +101,7 @@ class Record:
     adding/deleting/editing optional fields and storing the required fields.
     """
 
-    def __init__(self, name, address=None, phones=None, email=None, birthday=None):
+    def __init__(self, name, address:object=None, phones:object=None, email:object=None, birthday:object=None):
         self.name = Name(name)
         self.address = address if address else None
         self.phones = phones if phones else []
@@ -119,8 +119,7 @@ class Record:
         """
         Contact phones list
         """
-        all_phones = [phone.value for phone in self.phones]
-        return all_phones
+        return [phone.value for phone in self.phones]
 
     def add_email(self, email):
         """
