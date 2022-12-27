@@ -14,16 +14,16 @@ class Field:
     """
 
     def __init__(self, value):
-        self.__value = value
+        self._value = None
         self.value = value
 
     @property
     def value(self):
-        return self.__value
+        return self._value
 
     @value.setter
     def value(self, value):
-        self.__value = value
+        self._value = value
 
 
 class Name(Field):
@@ -44,37 +44,18 @@ class Phone(Field):
     `Phone` class, an optional field with a contact phone numbers.
     """
 
-    def __init__(self, value):
-        super().__init__(value)
-
-    @property
-    def value(self):
-        return self.__value
-
-    @value.setter
+    @Field.value.setter
     def value(self, new_value):
-        # if not re.fullmatch(r"\+\d{12}", new_value):
-        #     raise ValueError("Invalid phone number, enter the phone number in the format: (+380123456789)")
-        self.__value = new_value
+        self._value = new_value
 
 
 class Email(Field):
     """
     `Email` class, an optional field with a contact email address.
     """
-
-    def __init__(self, value):
-        super().__init__(value)
-
-    @property
-    def value(self):
-        return self.__value
-
-    @value.setter
+    @Field.value.setter
     def value(self, new_value):
-        # if not re.findall(r"[a-zA-Z]{1,}[a-zA-Z0-9._]{1,}[@][a-zA-Z]{1,}[.][a-zA-Z]{2,}", new_value):
-        #     raise ValueError("Invalid email, enter in the correct format")
-        self.__value = new_value
+        self._value = new_value
 
 
 class Birthday(Field):
@@ -89,10 +70,10 @@ class Birthday(Field):
         #     self.__value = date(year=int(value_splited[2]), month=int(value_splited[1]), day=int(value_splited[0]))
         # else:
         #     raise Exception("Birthday must be in DD.MM.YYYY format")
-        self.__value = value
+        self._value = value
 
     def __str__(self) -> str:
-        return self.__value.strftime("%d.%m.%Y")
+        return self._value.strftime("%d.%m.%Y")
 
 
 class Record:
@@ -101,7 +82,8 @@ class Record:
     adding/deleting/editing optional fields and storing the required fields.
     """
 
-    def __init__(self, name, address:object=None, phones:object=None, email:object=None, birthday:object=None):
+    def __init__(self, name, address: object = None, phones: object = None, email: object = None,
+                 birthday: object = None):
         self.name = Name(name)
         self.address = address if address else None
         self.phones = phones if phones else []
