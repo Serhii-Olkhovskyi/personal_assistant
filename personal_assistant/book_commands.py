@@ -14,7 +14,7 @@ def name_input(add_contact=None):
     :return: name
     """
     while True:
-        name = input(f'Please enter contact name: ').capitalize()
+        name = input(f'Please enter contact name: ').strip().title()
         if name:
             if name in CONTACTS.data.keys() and add_contact:
                 print(f"Contact '{name}' has already exist in contact book.")
@@ -241,22 +241,28 @@ def show_all_info():
 
 @input_error
 def list_birthday():
-    days = int(input(f'Please enter number of days: '))
+    while True:
+        try:
+            days = int(input(f'Please enter number of days: '))
+            break
+        except ValueError:
+            return 'Incorrect input! You must enter a number.'
     today = datetime.today()
-    end_day = today + timedelta(days)
-    count = 0
-    lst = "Birthday of this period:"
-    for name in CONTACTS:
-        bday = CONTACTS[name].birthday.value
-        bday = datetime.strptime(bday, "%Y.%m.%d").date()
-        if datetime(today.year, bday.month, bday.day) <= today:
-            nday = datetime(today.year + 1, bday.month, bday.day)
-        else:
-            nday = datetime(today.year, bday.month, bday.day)
-        if nday <= end_day:
-            lst += f'\n{name}: {CONTACTS[name].birthday.value}'
-            count += 1
-    return lst if count > 0 else f'No one birthday at this period'
+    end_day = today + timedelta(days=days)
+    lst = []
+    for name, record in CONTACTS.items():
+        if not (b_day := record.birthday.value):
+            continue
+        b_day = datetime.strptime(b_day, "%d.%m.%Y")
+        b_day1 = datetime.strptime(f'{b_day.day}.{b_day.month}.{today.year}', "%d.%m.%Y")
+        b_day2 = datetime.strptime(f'{b_day.day}.{b_day.month}.{end_day.year}', "%d.%m.%Y")
+        if today <= b_day1 <= end_day:
+            lst.append(f'{name} -> {b_day.strftime("%d.%m.%Y")}')
+        elif today <= b_day2 <= end_day:
+            lst.append(f'{name} -> {b_day.strftime("%d.%m.%Y")}')
+    if not lst:
+        return 'No one birthday at this period'
+    return "Birthday of this period:\n" + '\n'.join(lst)
 
 
 @input_error
@@ -392,19 +398,20 @@ def delete_contact_func():
 @input_error
 def show_birthday():
     name = name_input()
-    if name in CONTACTS.data.keys():
-        if CONTACTS[name].birthday:
-            today = datetime.today()
-            bday = datetime.strptime(CONTACTS[name].birthday.value, "%d.%m.%Y").date()
-            if datetime(today.year, bday.month, bday.day) <= today:
-                nday = datetime(today.year + 1, bday.month, bday.day)
-            else:
-                nday = datetime(today.year, bday.month, bday.day)
-            timediff = (nday - today).days + 1
-            # timediff = (nday - today).days + 1 if (today - nday).days < 0 else (datetime(nday.year + 1, nday.month, nday.day) - today).days + 1
-            return f'{timediff} days till {name} birthday left!'
-        return f"Contact '{name}' hasn`t birthday record. Please enter another command to add birthday"
-    return f"No records with '{name}' contact found. Type another contact name"
+    if birthday := CONTACTS.get(name).birthday.value:
+        t_now = datetime.now()
+        birthday = datetime.strptime(birthday, '%d.%m.%Y')
+        try:
+            dd1 = datetime(t_now.year + 1, birthday.month, birthday.day)
+        except ValueError:
+            dd1 = datetime(t_now.year + 1, 3, 1)
+        try:
+            dd2 = datetime(t_now.year, birthday.month, birthday.day)
+        except ValueError:
+            dd2 = datetime(t_now.year, 3, 1)
+        td = ((dd1 + timedelta(days=1)) - t_now) if (t_now - dd2).days > 0 else ((dd2 + timedelta(days=1)) - t_now)
+        return f'{td.days} days to birthday'
+    return f"{name} doesn't have a birthday"
 
 
 @input_error
