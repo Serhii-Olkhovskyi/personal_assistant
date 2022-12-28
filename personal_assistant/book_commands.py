@@ -256,13 +256,13 @@ def list_birthday():
         b_day = datetime.strptime(b_day, "%d.%m.%Y")
         b_day1 = datetime.strptime(f'{b_day.day}.{b_day.month}.{today.year}', "%d.%m.%Y")
         b_day2 = datetime.strptime(f'{b_day.day}.{b_day.month}.{end_day.year}', "%d.%m.%Y")
-        if today <= b_day1 <= end_day:
-            lst.append(f'{name} -> {b_day.strftime("%d.%m.%Y")}')
-        elif today <= b_day2 <= end_day:
-            lst.append(f'{name} -> {b_day.strftime("%d.%m.%Y")}')
+        if today <= b_day1 <= end_day or today <= b_day2 <= end_day:
+            lst.append(record.get_user_details())
     if not lst:
         return 'No one birthday at this period'
-    return "Birthday of this period:\n" + '\n'.join(lst)
+    table_header = ('Name', 'Phones', 'Birthday', 'Address', 'Email',)
+    show_out_table(lst, table_header)
+    return " "
 
 
 @input_error
