@@ -226,7 +226,6 @@ class ContactBook(UserDict):
         """
         del self.data[name]
 
-
     def address_book_load(self):
         """
         The function loads the address book at startup.
