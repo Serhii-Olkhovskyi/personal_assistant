@@ -13,6 +13,7 @@ In the application, this list can be called up with the `help` command
 |         add email         | add an email address to an existing contact                     |
 |         add phone         | add a new phone number to an existing contact                   |
 |         birthday          | shows how many days are left until the birthday                 |
+|       birthday list       | list users whose birthday is in N days                          |
 |      change address       | change the address of an existing contact                       |
 |      change birthday      | change the birthday of an existing contact                      |
 |       change email        | change the mailbox of an existing contact                       |
@@ -26,7 +27,6 @@ In the application, this list can be called up with the `help` command
 |         good bye          | close program and save data                                     |
 |           hello           | greeting                                                        |
 |           help            | command table                                                   |
-|       birthday list       | list users whose birthday is in N days                          |
 |           phone           | look up a phone number based on the name of an existing contact |
 |          search           | search contact                                                  |
 |     show all contacts     | view all contacts                                               |
