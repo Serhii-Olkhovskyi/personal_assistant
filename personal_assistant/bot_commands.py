@@ -27,7 +27,7 @@ COMMANDS = {
     'help': all_commands,
     'show all contacts': book_commands.show_all_info,
     'phone': book_commands.phone,
-    'birthday': book_commands.show_birthday,
+    'birthday contact': book_commands.show_birthday,
     'birthday list': book_commands.list_birthday,
     'search': book_commands.find_contacts,
     'sort': sort_folders.run,
