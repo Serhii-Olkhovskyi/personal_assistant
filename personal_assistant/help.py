@@ -34,7 +34,7 @@ def all_commands():
         ('File sorting', 'sort'),
         ('Find notes', 'find note'),
         ('Greeting', 'hello'),
-        ('List users whose birthday is in N days', 'list'),
+        ('List users whose birthday is in N days', 'birthday list'),
         ('Look up a phone number based on the name of an existing contact', 'phone'),
         ('Search contact', 'search'),
         ('Shows how many days are left until the birthday', 'birthday'),
