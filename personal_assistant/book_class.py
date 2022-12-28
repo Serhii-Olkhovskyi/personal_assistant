@@ -190,37 +190,16 @@ class Record:
         :return: list res_list
         """
 
-        res_list = []
         show_phone = ''
-        show_birthday = ''
-        show_address = ''
-        show_email = ''
 
         for phone in self.phones:
             show_phone += f"{phone.value}  "
 
-        if self.birthday is None:
-            show_birthday = ''
-        else:
-            show_birthday += f'{self.birthday.value}'
+        show_birthday = self.birthday.value or ''
+        show_address = self.address.value or ''
+        show_email = self.email.value or ''
 
-        if self.address is None:
-            show_address = ''
-        else:
-            show_address += f'{self.address.value}'
-
-        if self.email is None:
-            show_email = ''
-        else:
-            show_email += f'{self.email.value}'
-
-        res_list.append(self.name.value)
-        res_list.append(show_phone)
-        res_list.append(show_birthday)
-        res_list.append(show_address)
-        res_list.append(show_email)
-
-        return res_list
+        return self.name.value, show_phone, show_birthday, show_address, show_email
 
 
 class ContactBook(UserDict):
@@ -246,6 +225,7 @@ class ContactBook(UserDict):
         :param name: contact name
         """
         del self.data[name]
+
 
     def address_book_load(self):
         """
