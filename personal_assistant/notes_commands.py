@@ -4,17 +4,17 @@ import time
 
 
 NOTES = Notes()
-col = {'red': '\033[31m', 'blue': '\033[34m', 'green': '\033[32m', 'yellow': '\033[33m'}
+# col = {'red': '\033[31m', 'blue': '\033[34m', 'green': '\033[32m', 'yellow': '\033[33m'}
 
 
 def input_control(input_text: str, minimum=3, maximum=1000) -> str:
     """Функция проверяет минимальное и максимальное колличество символов ввода
     Возвращает строку"""
     while True:
-        if (s := input(f'{col["blue"]}{input_text}\n>>>')) and len(s) < minimum:
-            print(f'{col["red"]}You entered less than {minimum} characters. Please re-enter')
+        if (s := input(f'{input_text}\n>>>')) and len(s) < minimum:
+            print(f'You entered less than {minimum} characters. Please re-enter')
         elif len(s) > maximum:
-            print(f'{col["red"]}You entered more than {maximum} characters. Please re-enter')
+            print(f'You entered more than {maximum} characters. Please re-enter')
         else:
             return s
 
@@ -25,7 +25,7 @@ def add_note_commands():
     text = input_control('Enter the text of the note')
     teg = []
     while True:
-        in_teg = input(f'{col["blue"]}Do you want to add tags to your note?\nYes - Y, No - N\n>>>').lower()
+        in_teg = input(f'Do you want to add tags to your note?\nYes - Y, No - N\n>>>').lower()
         if in_teg == 'y':
             teg_str = input_control('Enter tags separated by commas', minimum=4)
             teg_list = teg_str.split(',')
@@ -35,9 +35,9 @@ def add_note_commands():
         elif in_teg == 'n':
             break
         else:
-            print(f'{col["red"]}You must enter Y or N')
+            print(f'You must enter Y or N')
     NOTES.add_notes(title=title, text=text, tag=teg)
-    return f'{col["yellow"]}Note added'
+    return f'Note added'
 
 
 def search_note_command():
@@ -56,8 +56,8 @@ def search_note_command():
                 ', '.join([a for a in note['tag']]),
                 time.strftime('%d-%m-%Y', time.gmtime(note['time']))
             ])
-        return f'{col["yellow"]}{table.get_string()}'
-    return f'{col["yellow"]}No notes found for your request'
+        return f'{table.get_string()}'
+    return f'No notes found for your request'
 
 
 def paginator(id_list: list, n=10):
@@ -97,27 +97,27 @@ def show_notes_command():
         for notes in paginator([a for a in NOTES.keys()], n=10):
             for id_note, title, text, teg, date in notes:
                 table.add_row([id_note, title, text, ', '.join(teg), date])
-            print(f'{col["yellow"]}{table.get_string()}')
+            print(f'{table.get_string()}')
             table.clear_rows()
-            if next_flag := input(f'{col["blue"]}Type "next" to view the next page of notes, '
+            if next_flag := input(f'Type "next" to view the next page of notes, '
                                   f'or any character to stop browsing.\n').lower() == 'next':
                 continue
         if next_flag:
-            return f'{col["blue"]}this is the last page with notes'
-        return f'{col["blue"]} '
-    return f'{col["red"]}Notes not yet created'
+            return f'this is the last page with notes'
+        return f' '
+    return f'Notes not yet created'
 
 
 def add_title_note(id_note):
     title = input_control('Specify a new note subject', maximum=150)
     NOTES.edit_notes(notes_id=id_note, title=title)
-    print(f'{col["blue"]}Note subject changed')
+    print(f'Note subject changed')
 
 
 def add_text_note(id_note):
     text = input_control('Enter new note text', maximum=150)
     NOTES.edit_notes(notes_id=id_note, text=text)
-    print(f'{col["blue"]}Note text changed')
+    print(f'Note text changed')
 
 
 def add_tag_note(id_note):
@@ -127,7 +127,7 @@ def add_tag_note(id_note):
     for item in tag_list:
         tag.append(item.strip().lower())
     NOTES.edit_notes(notes_id=id_note, tag=tag, adding_tags=True)
-    print(f'{col["blue"]}Tags added')
+    print(f'Tags added')
 
 
 def replace_tag_note(id_note):
@@ -139,18 +139,18 @@ def replace_tag_note(id_note):
         for item in tag_list:
             tag.append(item.strip().lower())
     NOTES.edit_notes(notes_id=id_note, tag=tag, adding_tags=False)
-    print(f'{col["blue"]}Tags changed')
+    print(f'Tags changed')
 
 
 def edit_note_command():
     """Функция редактирования заметок"""
-    id_note = input(f'{col["blue"]}Specify a note ID to edit, or type "show notes" to see all note IDs.\n')
+    id_note = input(f'Specify a note ID to edit, or type "show notes" to see all note IDs.\n')
     if id_note.lower() in ['show notes', 'show note', 'show', 'shownote']:
         return show_notes_command()
     try:
         id_note = int(id_note)
     except ValueError:
-        return f'{col["red"]}There are no notes with this ID. ID must be only a number\n' \
+        return f'There are no notes with this ID. ID must be only a number\n' \
                f'Use the "show notes" command to find out the note id'
     if NOTES.get(id_note, None):
         table = PrettyTable()
@@ -167,41 +167,41 @@ def edit_note_command():
             'r-tag': replace_tag_note
         }
         while True:
-            edit_com = input(f'{col["blue"]}Choose what to edit in a note\n{table.get_string()}\n>>> ')
+            edit_com = input(f'Choose what to edit in a note\n{table.get_string()}\n>>> ')
             if edit_com.lower() == 'stop':
                 break
             if edit_com.lower() in list(com_d.keys()):
                 com_d[edit_com.lower()](id_note)
                 while True:
-                    yn = input(f'{col["blue"]}Do you want to continue editing this note?\n'
+                    yn = input(f'Do you want to continue editing this note?\n'
                                f'Yes - Y, No - N >>>').lower()
                     if yn in ['y', 'n']:
                         break
-                    print(f'{col["red"]}You must enter Y or N')
+                    print(f'You must enter Y or N')
                 if yn == 'n':
                     break
             else:
-                print(f'{col["red"]}There is no such command. You must enter the command from the table below')
-        return f'{col["yellow"]}Note editing completed'
+                print(f'There is no such command. You must enter the command from the table below')
+        return f'Note editing completed'
     else:
-        return f'{col["red"]}There are no notes with this ID.\n' \
+        return f'There are no notes with this ID.\n' \
                f'Use the "show notes" command to find out the note id'
 
 
 def del_note_command():
     """Функция удаления заметок"""
-    id_note = input(f'{col["blue"]}Specify the note ID to delete, or type "show notes" to see all note IDs.\n')
+    id_note = input(f'Specify the note ID to delete, or type "show notes" to see all note IDs.\n')
     if id_note.lower() in ['show notes', 'show note', 'show', 'shownote']:
         return show_notes_command()
     try:
         id_note = int(id_note)
         if NOTES.delete_by_id(notes_id=id_note):
-            return f'{col["yellow"]}Note removed'
+            return f'Note removed'
         else:
-            return f'{col["red"]}There are no notes with this ID\n' \
+            return f'There are no notes with this ID\n' \
                    f'Use the "show notes" command to find out the note id'
     except ValueError:
-        return f'{col["red"]}There are no notes with this ID. ID must be only a number\n' \
+        return f'There are no notes with this ID. ID must be only a number\n' \
                f'Use the "show notes" command to find out the note id'
 
 
