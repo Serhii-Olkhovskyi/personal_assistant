@@ -233,7 +233,7 @@ def show_all_info():
     for users in CONTACTS.values():
         info_data.append(users.get_user_details())
 
-    table_header = ('Name', 'Phones', 'Birthday', 'Email', 'Address')
+    table_header = ('Name', 'Phones', 'Birthday', 'Address', 'Email',)
     show_out_table(info_data, table_header)
 
     return f'ok.'
@@ -419,26 +419,13 @@ def phone():
 
 def find_contacts():
     name = input("enter the contact name to search: ")
-    data = name.strip().lower()
+    data = name.strip().title()
     matches_list = []
-    for record in CONTACTS.values():
-
-        if data in record.name.value.lower():
-            matches_list.append(record.name.value)
-
-        elif data.isdigit():
-            for number in record.phones:
-                if data in number.value:
-                    matches_list.append(record.name.value)
-
-    return _show_contact(matches_list)
-
-
-def _show_contact(matches):
-    if not matches:
-        return f"Збігів не знайдено."
-    else:
-        return_text = ""
-        for match in matches:
-            return_text += f"Збіг в контакті - {match}\n"
-        return return_text
+    for users in CONTACTS.values():
+        if users.name.value == data:
+            matches_list.append(users.get_user_details())
+    if matches_list:
+        table_header = ('Name', 'Phones', 'Birthday', 'Address', 'Email')
+        show_out_table(matches_list, table_header)
+        return "Contact found"
+    return f"No matches were found."
