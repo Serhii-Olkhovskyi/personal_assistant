@@ -36,6 +36,7 @@ def all_commands():
         ('Greeting', 'hello'),
         ('List users whose birthday is in N days', 'list'),
         ('Look up a phone number based on the name of an existing contact', 'phone'),
+        ('Search contact', 'search'),
         ('Shows how many days are left until the birthday', 'birthday'),
         ('View all contacts', 'show all contacts'),
         ('View notes', 'show notes'),
