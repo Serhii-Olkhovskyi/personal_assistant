@@ -166,19 +166,19 @@ class Record:
         """
         Delete email for contact
         """
-        self.email = None
+        self.email = Email(None)
 
     def delete_address(self):
         """
         Delete address for contact
         """
-        self.address = None
+        self.address = Address(None)
 
     def delete_birthday(self):
         """
         Delete birthday for contact
         """
-        self.birthday = None
+        self.birthday = Birthday(None)
 
     def get_user_details(self):
         """
@@ -191,13 +191,21 @@ class Record:
         """
 
         show_phone = ''
+        show_birthday = ''
+        show_address = ''
+        show_email = ''
 
         for phone in self.phones:
             show_phone += f"{phone.value}  "
 
-        show_birthday = self.birthday.value or ''
-        show_address = self.address.value or ''
-        show_email = self.email.value or ''
+        if self.birthday:
+            show_birthday = self.birthday.value
+
+        if self.address:
+            show_address = self.address.value
+
+        if self.email:
+            show_email = self.email.value
 
         return self.name.value, show_phone, show_birthday, show_address, show_email
 

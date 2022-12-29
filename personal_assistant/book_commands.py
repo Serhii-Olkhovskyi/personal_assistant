@@ -161,7 +161,6 @@ def add_email_func():
 
     name = name_input()
     email = email_input()
-
     if not CONTACTS[name].email.value:
         CONTACTS[name].add_email(email)
         return f"Email:{email} was added to contact '{name}'."
@@ -275,14 +274,15 @@ def change_phone_func():
     name = name_input()
 
     while True:
-        print(f'Contact number to change.')
+        # print(f'Input old contact number to change.')
         phone_old = phones_input()
-        if phone_old in CONTACTS[name].get_phones():
+
+        if phone_old[0] in CONTACTS[name].get_phones():
             print(f'New contact number to record.')
             phone_new = phones_input()
-            CONTACTS[name].change_phone(phone_old, phone_new)
-            return f"{name}`s phone is changed from {phone_old} to {phone_new}."
-        print(f"Contact '{name}' doesn't have such phone number: {phone_old}.")
+            CONTACTS[name].change_phone(phone_old[0], phone_new[0])
+            return f"{name}`s phone is changed from {phone_old[0]} to {phone_new[0]}."
+        print(f"Contact '{name}' doesn't have such phone number: {phone_old[0]}.")
 
 
 @input_error
@@ -314,7 +314,7 @@ def change_address_func():
     while True:
         address = address_input()
         if address:
-            CONTACTS[name].change_adress(address)
+            CONTACTS[name].change_address(address)
             return f"{name}`s address is changed to {address}."
         print("Please enter address.You didn't type anything.")
 
@@ -343,12 +343,12 @@ def delete_phone_func():
     name = name_input()
 
     while True:
-        print("Phone to delete.")
+        # print("Phone to delete.")
         phone = phones_input()
-        if phone in CONTACTS[name].get_phones():
-            CONTACTS[name].delete_phone(phone)
-            return f"{name}`s phone number '{phone}' was deleted."
-        print(f"{name} have no such phone number '{phone}'.")
+        if phone[0] in CONTACTS[name].get_phones():
+            CONTACTS[name].delete_phone(phone[0])
+            return f"{name}`s phone number '{phone[0]}' was deleted."
+        print(f"{name} have no such phone number '{phone[0]}'.")
 
 
 @input_error
