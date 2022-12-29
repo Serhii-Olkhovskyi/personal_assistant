@@ -12,9 +12,8 @@ list_name_folder = ['Documents', 'Images', 'Musics', 'Videos', 'Archives', 'Othe
 
 def file_remove(file_ob, path):
     """
-    Переносимо файли по папкам.
+    We transfer files by folder.
 
-    Параметры
     ---------
     :param:
     :return:
@@ -57,9 +56,8 @@ def file_remove(file_ob, path):
 
 def files_unpack(way_console, file_ob):
     """
-    Розпаковуємо архив.
+    We unpack the archive.
 
-    Параметры
     ---------
     :param:
     :return:
@@ -72,9 +70,8 @@ def files_unpack(way_console, file_ob):
 
 def folder_create(way_consoles):
     """
-    Створюємо папки по групам.
+    We create folders by groups.
 
-    Параметры
     ---------
     :param:
     :return:
@@ -90,9 +87,8 @@ def folder_create(way_consoles):
 
 def folders_dell(way_consoles):
     """
-    Видаляємо папки.
+    Delete folders.
 
-    Параметры
     ---------
     :param:
     :return:
@@ -105,9 +101,8 @@ def folders_dell(way_consoles):
 
 def out_folders(name_folder):
     """
-    Функція виводить назву папки я ка була створена.
+    The function displays the name of the folder that was created.
 
-    Параметры
     ---------
     :param:
     :return:
@@ -121,9 +116,8 @@ def out_folders(name_folder):
 
 def out_files(path_folders, folders):
     """
-    Функція виводить назву файлів які були перенесені.
+    The function displays the name of the files that were transferred.
 
-    Параметры
     ---------
     :param:
     :return:
