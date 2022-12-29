@@ -110,7 +110,7 @@ def out_folders(name_folder):
 
     print('')
     print('-------------------------------------------------------')
-    print(f'Папка {name_folder} содержит следующие файлы: ')
+    print(f'The {name_folder} folder contains the following files: ')
     print('')
 
 
