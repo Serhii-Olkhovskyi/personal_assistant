@@ -14,6 +14,15 @@ A list of all commands and their syntax can be found **[here](./help_comands.md)
 - Working with notes
 - Working with files and folders (their sorting)
 
+## Install "Personal assistant"
+
+> You will need pip to install this package.
+1. Download the Personal Assistant package.
+The package can be downloaded from the following link: https://github.com/Serhii-Olkhovskyi/personal_assistant
+2. Run command line interpreter on your computer (run PowerShell as Administrator).
+3. `$ pip install [path to folder with downloaded module]`
+4. Run the program with the command `PersonalAssistant`
+
 ## Documentation
 
 
